@@ -1,22 +1,12 @@
 
 module Bot
   module DiscordCommands
-=begin
-    def win
-      extend Discordrb::Commands::CommandContainer
-      w = event.send "Tebrikler kazandınız."
-      end
-
-    def lose
-      extend Discordrb::Commands::CommandContainer
-      l = event.send "Lul noob"
-      end
-=end
     module Bjack
       extend Discordrb::Commands::CommandContainer
      command :bjack do |event|
      $fuk = 0
      $k = 0
+     $cekmesayisi = 0
     $nick = event.user.username
    $kartlar = ["1","2","3","4","5","6","7","8","9","10","J","Q","K","1","2","3","4","5","6","7","8","9","10","J","Q","K","1","2","3","4","5","6","7","8","9","10","J","Q","K","1","2","3","4","5","6","7","8","9","10","J","Q","K"]
    $b = $kartlar.sample
@@ -32,6 +22,7 @@ if $b == "J"|| $b == "Q"|| $b == "K"
   bt = 10
 elsif $b == "1"
   bt = 11
+  $fukc += 1
 else
  bt = $b.to_i
 end
@@ -39,6 +30,7 @@ end
    it = 10
  elsif $i == "1"
    it = 11
+   $fukc += 1
  else
   it = $i.to_i
 end
@@ -129,7 +121,7 @@ DEALER   I     I######I      I     I #{$d}    I   #{$nick}
                                                I      I
                                                --------
 ```"
-sleep(0.5)
+sleep(1)
 n.edit " ```
              #{$t0}                 #{$t2}
          --------            --------
@@ -141,7 +133,7 @@ DEALER   I     I######I      I     I #{$d}    I       #{$nick}
                                             I      I
                                             --------
 ```"
-sleep(0.5)
+sleep(1)
 
 $t2 += $c1t
 
@@ -162,7 +154,7 @@ n.edit  " ```
                                            --------
 
 ```"
-sleep(1)
+    command(:bdone).call
   end
 else
 
@@ -243,7 +235,7 @@ if $t2 > 21
                                              ------I      I
                                                    --------
     ```"
-  sleep(1)
+      command(:bdone).call
   end
 else
 
@@ -328,7 +320,7 @@ if $t2 > 21
                                                    ------I      I
                                                          --------
     ```"
-    sleep(1)
+        command(:bdone).call
   end
 else
 
@@ -363,13 +355,14 @@ $kartlarc = []
 
 loop do
 break if $t3 > $t2
+break if $t2 > 21
   if $t2 > 21
-     #lose
+
 break
   else
      if $t3 > $t2
-       #lose
-       break
+
+
      else
        #kart cek
        $cekmesayisi += 1
@@ -384,7 +377,7 @@ break
        else
         dealct = dealc.to_i
        end
-       $kartlarc.push = dealc
+       $kartlarc<< dealc
 
        $t3 += dealct
 
@@ -393,8 +386,8 @@ break
               $t3 -= 10
               $dfuk -= 1
             elsif $dfuk == 0
-              #lose
-              break
+
+
             end
         else
            #dur
@@ -426,85 +419,96 @@ $sira8 = "                                        "
 $sira9 = "                                        "
 
   when 2
-    $sira1 = "             --------             "
-    $sira2 = "             I #{$b}   --------       "
-    $sira3 = "    DEALER   I     I #{$i}    I       "
-    $sira4 = "             I     I      I       "
-    $sira5 = "             ------I      I       "
-    $sira6 = "                   --------       "
-    $sira7 = "                                  "
-    $sira8 = "                                  "
-    $sira9 = "                                  "
+    $sira1 = "             --------                                "
+    $sira2 = "             I #{$b}   --------                          "
+    $sira3 = "    DEALER   I     I #{$i}   --------                    "
+    $sira4 = "             I     I     I #{$kartlarc[0]}   --------              "
+    $sira5 = "             ------I     I     I #{$kartlarc[1]}    I              "
+    $sira6 = "                   ------I     I      I              "
+    $sira7 = "                         ------I      I              "
+    $sira8 = "                               --------              "
+    $sira9 = "                                                     "
 
   when 3
-    $sira1 = "             --------             "
-    $sira2 = "             I #{$b}   --------       "
-    $sira3 = "    DEALER   I     I #{$i}    I       "
-    $sira4 = "             I     I      I       "
-    $sira5 = "             ------I      I       "
-    $sira6 = "                   --------       "
-    $sira7 = "                                  "
-    $sira8 = "                                  "
-    $sira9 = "                                  "
+    $sira1 = "             --------                                "
+    $sira2 = "             I #{$b}   --------                          "
+    $sira3 = "    DEALER   I     I #{$i}   --------                    "
+    $sira4 = "             I     I     I #{$kartlarc[0]}   --------              "
+    $sira5 = "             ------I     I     I #{$kartlarc[1]}   --------              "
+    $sira6 = "                   ------I     I     I #{$kartlarc[2]}    I              "
+    $sira7 = "                         ------I     I      I              "
+    $sira8 = "                               ------I      I              "
+    $sira9 = "                                     --------                "
 
 end
 
 if $k == 0
    q = event.send " ```
-              #{$t1}                  #{$t2}
+                    #{$t3}                   #{$t2}
 #{$sira1}--------
 #{$sira2}I #{$u}   --------
 #{$sira3}I     I #{$d}    I   #{$nick}
 #{$sira4}I     I      I
 #{$sira5}------I      I
 #{$sira6}      --------
+#{$sira7}
+#{$sira8}
+#{$sira9}
 ```"
 
 
 elsif $k == 1
   q = event.send  " ```
-                  #{$t1}                  #{$t2}
-             --------            --------
-             I #{$b}   --------      I #{$u}   --------
-    DEALER   I     I######I      I     I #{$d}   --------     #{$nick}
-             I     I######I      I     I     I #{$c1}    I
-             ------I######I      ------I     I      I
-                   --------            ------I      I
-                                             --------
-
+                        #{$t3}                    #{$t2}
+#{$sira1}--------
+#{$sira2}I #{$u}   --------
+#{$sira3}I     I #{$d}   --------     #{$nick}
+#{$sira4}I     I     I #{$c1}    I
+#{$sira5}------I     I      I
+#{$sira6}      ------I      I
+#{$sira7}            --------
+#{$sira8}
+#{$sira9}
   ```"
 
 elsif $k == 2
   q = event.send " ```
-                #{$t1}                  #{$t2}
-           --------            --------
-           I #{$b}   --------      I #{$u}   --------
-  DEALER   I     I######I      I     I #{$d}   --------     #{$nick}
-           I     I######I      I     I     I #{$c1}   --------
-           ------I######I      ------I     I     I #{$c2}    I
-                 --------            ------I     I      I
-                                           ------I      I
-                                                 --------
+                      #{$t3}                            #{$t2}
+#{$sira1}--------
+#{$sira2}I #{$u}   --------
+#{$sira3}I     I #{$d}   --------     #{$nick}
+#{$sira4}I     I     I #{$c1}   --------
+#{$sira5}------I     I     I #{$c2}    I
+#{$sira6}      ------I     I      I
+#{$sira7}            ------I      I
+#{$sira8}                  --------
+#{$sira9}
   ```"
 
 elsif $k == 3
   q = event.send " ```
-                #{$t1}                  #{$t2}
+                      #{$t3}                                 #{$t2}
 #{$sira1}--------
 #{$sira2}I #{$u}   --------
 #{$sira3}I     I #{$d}   --------     #{$nick}
 #{$sira4}I     I     I #{$c1}   --------
 #{$sira5}------I     I     I #{$c2}   --------
 #{$sira6}      ------I     I     I #{$c3}    I
-                     ------I     I      I
-                           ------I      I
-                                 --------
+#{$sira7}            ------I     I      I
+#{$sira8}                  ------I      I
+#{$sira9}                        --------
   ```"
 
 end
 
+if $t2 > $t3 && $t2 < 21 || $t3 > 21
 
+    w = event.send "Tebrikler kazandınız."
 
+  else
+
+      l = event.send "Kaybettiniz"
+    end
 
       end
     end
