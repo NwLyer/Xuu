@@ -15,7 +15,7 @@ end
 module Reklam3
   extend Discordrb::EventContainer
   presence(from:'NwLyer' , status: :online) do |event|
-    BOT.send_message(331139916379586561,'Patron geldi reklam meklam yok.')
+    BOT.send_message(331139916379586561,'NwLyer is online.')
 end
       end
   end
