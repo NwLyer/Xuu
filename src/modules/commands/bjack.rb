@@ -164,7 +164,6 @@ n.edit  " ```
                                            --------
 
 ```"
-    command(:bdone).call
   end
 else
 
@@ -245,7 +244,6 @@ if $t2 > 21
                                              ------I      I
                                                    --------
     ```"
-      command(:bdone).call
   end
 else
 
@@ -330,7 +328,6 @@ if $t2 > 21
                                                    ------I      I
                                                          --------
     ```"
-        command(:bdone).call
   end
 else
 
