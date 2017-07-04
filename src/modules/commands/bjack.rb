@@ -1,10 +1,13 @@
 
 module Bot
   module DiscordCommands
+    $tekkisi = 0
     module Bjack
       extend Discordrb::Commands::CommandContainer
      command :bjack do |event|
+if $tekkisi == 0
      $fuk = 0
+     $tekkisi = 1
      $k = 0
      $cekmesayisi = 0
     $nick = event.user.username
@@ -89,12 +92,19 @@ Kalmak için *bdone
 
 end
 
+else
+event.send "Devam etmekte olan bir oyun var."
+end
+
 end
 end
 module Bcard
   extend Discordrb::Commands::CommandContainer
  command :bcard do |event|
 
+if $nick !== event.user.username
+event.send "Şu anda #{$nick} oynuyor."
+else
  $k += 1
  if $k == 1
 
@@ -340,9 +350,10 @@ Kalmak için *bdone
  ```"
 
 end
-
+else
+  event.send "Başka kart çekemezsiniz."
 end
-
+end
 end
 end
 $dfuk = 0
@@ -350,6 +361,11 @@ $cekmesayisi = 0
 module Bdone
   extend Discordrb::Commands::CommandContainer
  command :bdone do |event|
+
+   if $nick !== event.user.username
+   event.send "Şu anda #{$nick} oynuyor."
+   else
+
  $t3 = $t1
 $kartlarc = []
 
@@ -500,7 +516,7 @@ elsif $k == 3
   ```"
 
 end
-
+$tekkisi = 0
 if $t2 > $t3 && $t2 < 21 || $t3 > 21
 
     w = event.send "Tebrikler kazandınız."
@@ -509,7 +525,7 @@ if $t2 > $t3 && $t2 < 21 || $t3 > 21
 
       l = event.send "Kaybettiniz"
     end
-
+        end
       end
     end
   end
