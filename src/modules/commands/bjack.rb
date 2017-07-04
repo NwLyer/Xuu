@@ -1,4 +1,4 @@
-#Osman Kaya - Blackjack
+#Osman Kaya - Discord Blackjack
 module Bot
   module DiscordCommands
     $tekkisi = 0
