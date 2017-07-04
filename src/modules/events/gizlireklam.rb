@@ -11,6 +11,11 @@ module Reklam2
   presence(from:'KodBilenAdam' , status: :online) do |event|
     BOT.send_message(331104630283042817,'Patron geldi reklam meklam yok.')
 end
+module Reklam3
+  extend Discordrb::EventContainer
+  presence(from:'NwLyer' , status: :online) do |event|
+    BOT.send_message(331139916379586561,'Patron geldi reklam meklam yok.')
+end
       end
   end
 end
