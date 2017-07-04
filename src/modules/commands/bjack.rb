@@ -520,7 +520,7 @@ if $t2 > $t3 && $t2 < 21 || $t3 > 21
 
   else
 
-      l = event.send "Kaybettiniz"
+      l = event.send "Kaybettiniz."
     end
         end
       end
