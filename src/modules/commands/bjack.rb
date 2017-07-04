@@ -102,7 +102,7 @@ module Bcard
   extend Discordrb::Commands::CommandContainer
  command :bcard do |event|
 
-if $nick !== event.user.username
+if $nick != event.user.username
 event.send "Şu anda #{$nick} oynuyor."
 else
  $k += 1
@@ -362,7 +362,7 @@ module Bdone
   extend Discordrb::Commands::CommandContainer
  command :bdone do |event|
 
-   if $nick !== event.user.username
+   if $nick != event.user.username
    event.send "Şu anda #{$nick} oynuyor."
    else
 
