@@ -358,7 +358,7 @@ $cekmesayisi = 0
 module Bdone
   extend Discordrb::Commands::CommandContainer
  command :bdone do |event|
-
+$tekkisi = 0
    if $nick != event.user.username
    event.send "Şu anda #{$nick} oynuyor."
    else
@@ -513,7 +513,6 @@ elsif $k == 3
   ```"
 
 end
-$tekkisi = 0
 if $t2 > $t3 && $t2 < 21 || $t3 > 21
 
     w = event.send "Tebrikler kazandınız."
