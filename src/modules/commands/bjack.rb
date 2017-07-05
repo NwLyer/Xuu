@@ -26,7 +26,7 @@ if $b == "J"|| $b == "Q"|| $b == "K" || $b == "X"
   bt = 10
 elsif $b == "1"
   bt = 11
-  $fukc += 1
+  $dfuk += 1
 else
  bt = $b.to_i
 end
@@ -34,7 +34,7 @@ end
    it = 10
  elsif $i == "1"
    it = 11
-   $fukc += 1
+   $dfuk += 1
  else
   it = $i.to_i
 end
