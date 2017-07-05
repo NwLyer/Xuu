@@ -6,7 +6,7 @@ module Bot
       extend Discordrb::Commands::CommandContainer
       command :test do |event|
        event.message.delete
-        $a = event.user.username
+        $a = event.user.profile
         m = event.send "Hi! #{$a}"
       end
     end
