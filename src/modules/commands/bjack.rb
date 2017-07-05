@@ -7,11 +7,12 @@ module Bot
      command :bjack do |event|
 if $tekkisi == 0
      $fuk = 0
+     $dfuk = 0
      $tekkisi = 1
      $k = 0
      $cekmesayisi = 0
     $nick = event.user.username
-   $kartlar = ["1","2","3","4","5","6","7","8","9","10","J","Q","K","1","2","3","4","5","6","7","8","9","10","J","Q","K","1","2","3","4","5","6","7","8","9","10","J","Q","K","1","2","3","4","5","6","7","8","9","10","J","Q","K"]
+   $kartlar = ["1","2","3","4","5","6","7","8","9","X","J","Q","K","1","2","3","4","5","6","7","8","9","X","J","Q","K","1","2","3","4","5","6","7","8","9","X","J","Q","K","1","2","3","4","5","6","7","8","9","X","J","Q","K"]
    $b = $kartlar.sample
     $kartlar.delete_at($kartlar.find_index($b))
    $i = $kartlar.sample
@@ -21,7 +22,7 @@ if $tekkisi == 0
    $d = $kartlar.sample
     $kartlar.delete_at($kartlar.find_index($d))
 
-if $b == "J"|| $b == "Q"|| $b == "K"
+if $b == "J"|| $b == "Q"|| $b == "K" || $b == "X"
   bt = 10
 elsif $b == "1"
   bt = 11
@@ -29,7 +30,7 @@ elsif $b == "1"
 else
  bt = $b.to_i
 end
- if $i == "J"|| $i == "Q"|| $i == "K"
+ if $i == "J"|| $i == "Q"|| $i == "K" || $i == "X"
    it = 10
  elsif $i == "1"
    it = 11
@@ -37,7 +38,7 @@ end
  else
   it = $i.to_i
 end
-  if $u == "J"|| $u == "Q"|| $u == "K"
+  if $u == "J"|| $u == "Q"|| $u == "K" || $u == "X"
     ut = 10
   elsif $u == "1"
     ut = 11
@@ -45,7 +46,7 @@ end
   else
    ut = $u.to_i
 end
-   if $d == "J"|| $d == "Q"|| $d == "K"
+   if $d == "J"|| $d == "Q"|| $d == "K" || $d == "X"
      dt = 10
    elsif $d == "1"
      dt = 11
@@ -74,7 +75,6 @@ if $t2 > 21
                      --------            --------
 
    ```"
-  sleep(1)
   end
 else
 
@@ -111,7 +111,7 @@ else
 $c1 = $kartlar.sample
 $kartlar.delete_at($kartlar.find_index($c1))
 
-if $c1 == "J"|| $c1 == "Q"|| $c1 == "K"
+if $c1 == "J"|| $c1 == "Q"|| $c1 == "K" || $c1 == "X"
 $c1t = 10
 elsif $c1 == "1"
 $c1t = 11
@@ -188,7 +188,7 @@ elsif $k == 2
 $c2 = $kartlar.sample
 $kartlar.delete_at($kartlar.find_index($c2))
 
-if $c2 == "J"|| $c2 == "Q"|| $c2 == "K"
+if $c2 == "J"|| $c2 == "Q"|| $c2 == "K" || $c2 == "X"
   $c2t = 10
 elsif $c2 == "1"
   $c2t = 11
@@ -268,7 +268,7 @@ elsif $k == 3
 $c3 = $kartlar.sample
 $kartlar.delete_at($kartlar.find_index($c3))
 
-if $c3 == "J"|| $c3 == "Q"|| $c3 == "K"
+if $c3 == "J"|| $c3 == "Q"|| $c3 == "K" || $c3 == "X"
   $c3t = 10
 elsif $c3 == "1"
   $c3t = 11
@@ -382,7 +382,7 @@ break
        dealc = $kartlar.sample
        $kartlar.delete_at($kartlar.find_index(dealc))
 
-       if dealc == "J"|| dealc == "Q"|| dealc == "K"
+       if dealc == "J"|| dealc == "Q"|| dealc == "K" || dealc == "X"
           dealct = 10
        elsif dealc == "1"
          dealct = 11
