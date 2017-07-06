@@ -1,13 +1,13 @@
 module Bot
   module DiscordCommands
-    tekrar = 0
+    $tekrar = 0
     module Rulet
       extend Discordrb::Commands::CommandContainer
       command(:rulet, help_available: false) do |event, args|
-        if args == "red" || args == "black"
-        if tekrar == 0
+    if args == "red" || args == "black"
+        if $tekrar == 0
           $nick = event.user.username
-          tekrar = 1
+          $tekrar = 1
         array = [":black_circle:",":red_circle:"]
         a1 = array.sample
         a2 = array.sample
@@ -47,22 +47,22 @@ module Bot
     sleep(0.2)
             r.edit "#{a9}#{a10}#{a0}#{a11}#{a12}I#{win}I#{a13}#{a14}#{a15}#{a16}#{a17}"
 
-if win == ":black_circle:"
-  wrenk = black
-elsif win == "red_circle:"
-  wrenk = red
-end
+                if win == ":black_circle:"
+                    wrenk = black
+        elsif win == "red_circle:"
+            wrenk = red
+          end
             if args == wrenk
               event.send "#{$nick} kazandınız."
-              tekrar = 0
+              $tekrar = 0
             else
               event.send "#{$nick} kaybettiniz."
-              tekrar = 0
+              $tekrar = 0
             end
 
-          else
+        else
             event.send "Devam etmekte olan bir oyun var."
-          end
+      end
 else
   event.send "*rulet black ya da *black red komutlarını kullanınız."
 end
