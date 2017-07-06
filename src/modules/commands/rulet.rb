@@ -24,7 +24,7 @@ module Bot
         win = array.sample
         a0 = array.sample
 
-    r = event.send "#{a1}#{a2}#{a3}#{a4}#{a5}I#{a6}I#{a7}#{a8}#{a9}#{a10}#{a0}"
+    r = event.send "#{a1} #{a2} #{a3} #{a4} #{a5} I #{a6} I #{a7} #{a8} #{a9} #{a10 }#{a0}"
     sleep(0.1)
             r.edit "#{a2}#{a3}#{a4}#{a5}#{a6}I#{a7}I#{a8}#{a9}#{a10}#{a0}#{a11}"
     sleep(0.1)
