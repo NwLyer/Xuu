@@ -6,6 +6,7 @@ module Bot
     module Bjack
       extend Discordrb::Commands::CommandContainer
      command :bjack do |event, args|
+           $id = event.user.id
     if args == nil
       event.send "Bet miktarını giriniz.(*bjack 10)"
 elsif args.to_i < 10
@@ -20,10 +21,10 @@ if $tekkisi == 0
   $paralar = JSON.parse($dosya)
   $para = $paralar[$id]
   if $para == nil
-    $paralar[$id] = 1000 - $args.to_i
+    $paralar[$id] = 1000 - args.to_i
     File.write('data/para.json', $paralar.to_json)
   else
-    $paralar[$id] -= $args.to_i
+    $paralar[$id] -= args.to_i
     File.write('data/para.json', $paralar.to_json)
   end
      $fuk = 0
@@ -33,7 +34,6 @@ if $tekkisi == 0
      $cekmesayisi = 0
      $timeout = Time.now + 30
     $nick = event.user.username
-    $id = event.user.id
    $kartlar = ["1","2","3","4","5","6","7","8","9","X","J","Q","K","1","2","3","4","5","6","7","8","9","X","J","Q","K","1","2","3","4","5","6","7","8","9","X","J","Q","K","1","2","3","4","5","6","7","8","9","X","J","Q","K"]
    $b = $kartlar.sample
     $kartlar.delete_at($kartlar.find_index($b))
@@ -514,10 +514,10 @@ $sira9 = "                                        "
     $sira2 = "             I #{$b}   --------                          "
     $sira3 = "    DEALER   I     I #{$i}   --------                    "
     $sira4 = "             I     I     I #{$kartlarc[0]}   --------              "
-    $sira5 = "             ------I     I     I #{$kartlarc[1]}   --------  "
-    $sira6 = "                   ------I     I     I #{$kartlarc[2]}    I  "
-    $sira7 = "                         ------I     I      I              "
-    $sira8 = "                               ------I      I              "
+    $sira5 = "             ------I     I     I #{$kartlarc[1]}   --------         "
+    $sira6 = "                   ------I     I     I #{$kartlarc[2]}    I         "
+    $sira7 = "                         ------I     I      I         "
+    $sira8 = "                               ------I      I         "
     $sira9 = "                                     --------                "
 
 end
@@ -587,11 +587,11 @@ if $t2 > $t3 && $t2 < 21 || $t3 > 21
   $paralar[$id] += ($bet.to_i * 2)
   File.write('data/para.json', $paralar.to_json)
 
-        w = event.send "Tebrikler kazandınız.Puanınız: #{paralar[$id]}"
+        w = event.send "Tebrikler kazandınız.Paranız: #{$paralar[$id]}"
 
   else
 
-      l = event.send "Kaybettiniz.Puanınız: #{paralar[$id]}"
+      l = event.send "Kaybettiniz.Paranız: #{$paralar[$id]}"
     end
         end
       end
