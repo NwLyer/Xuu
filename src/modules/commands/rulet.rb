@@ -1,8 +1,11 @@
 module Bot
   module DiscordCommands
+    tekrar = 0
     module Rulet
       extend Discordrb::Commands::CommandContainer
       command(:rulet, help_available: false) do |event, args|
+        if tekrar == 0
+          tekrar = 1
         array = [":black_circle:",":red_circle:"]
         a1 = array.sample
         a2 = array.sample
@@ -25,21 +28,21 @@ module Bot
         a0 = array.sample
 
     r = event.send "#{a1}#{a2}#{a3}#{a4}#{a5}I#{a6}I#{a7}#{a8}#{a9}#{a10}#{a0}"
-    sleep(0.1)
+    sleep(0.2)
             r.edit "#{a2}#{a3}#{a4}#{a5}#{a6}I#{a7}I#{a8}#{a9}#{a10}#{a0}#{a11}"
-    sleep(0.1)
+    sleep(0.2)
             r.edit "#{a3}#{a4}#{a5}#{a6}#{a7}I#{a8}I#{a9}#{a10}#{a0}#{a11}#{a12}"
-    sleep(0.1)
+    sleep(0.2)
             r.edit "#{a4}#{a5}#{a6}#{a7}#{a8}I#{a9}I#{a10}#{a0}#{a11}#{a12}#{win}"
-    sleep(0.1)
+    sleep(0.2)
             r.edit "#{a5}#{a6}#{a7}#{a8}#{a9}I#{a10}I#{a0}#{a11}#{a12}#{win}#{a13}"
-    sleep(0.1)
+    sleep(0.2)
             r.edit "#{a6}#{a7}#{a8}#{a9}#{a10}I#{a0}I#{a11}#{a12}#{win}#{a13}#{a14}"
-    sleep(0.1)
+    sleep(0.2)
             r.edit "#{a7}#{a8}#{a9}#{a10}#{a0}I#{a11}I#{a12}#{win}#{a13}#{a14}#{a15}"
-    sleep(0.1)
+    sleep(0.2)
             r.edit "#{a8}#{a9}#{a10}#{a0}#{a11}I#{a12}I#{win}#{a13}#{a14}#{a15}#{a16}"
-    sleep(0.1)
+    sleep(0.2)
             r.edit "#{a9}#{a10}#{a0}#{a11}#{a12}I#{win}I#{a13}#{a14}#{a15}#{a16}#{a17}"
 
 if win == ":black_circle:"
@@ -49,9 +52,14 @@ elsif win == "red_circle:"
 end
             if args == wrenk
               event.send "Kazandınız."
+              tekrar = 0
             else
               event.send "Kaybettiniz."
+              tekrar = 0
             end
+
+          else
+          end
       end
     end
   end
