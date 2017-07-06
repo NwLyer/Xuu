@@ -244,16 +244,16 @@ if $t2 > 21
     $t2 -= 10
     $fuk -= 1
 
-    n.edit  " ```
-                    #{$t0}                  #{$t2}
-               --------            --------
-               I #{$b}   --------      I #{$u}   --------     #{$nick}
-      DEALER   I     I######I      I     I #{$d}   --------
-               I     I######I      I     I     I #{$c1}    I
-               ------I######I      ------I     I      I
-                     --------            ------I      I
-                                               --------
-
+    o.edit " ```
+                  #{$t0}                  #{$t2}
+             --------            --------
+             I #{$b}   --------      I #{$u}   --------
+    DEALER   I     I######I      I     I #{$d}   --------     #{$nick}
+             I     I######I      I     I     I #{$c1}   --------
+             ------I######I      ------I     I     I #{$c2}    I
+                   --------            ------I     I      I
+                                             ------I      I
+                                                   --------
     ```"
 
   elsif $fuk == 0
@@ -340,16 +340,17 @@ if $t2 > 21
     $t2 -= 10
     $fuk -= 1
 
-    n.edit  " ```
-                    #{$t0}                  #{$t2}
-               --------            --------
-               I #{$b}   --------      I #{$u}   --------     #{$nick}
-      DEALER   I     I######I      I     I #{$d}   --------
-               I     I######I      I     I     I #{$c1}    I
-               ------I######I      ------I     I      I
-                     --------            ------I      I
-                                               --------
-
+    k.edit " ```
+                  #{$t0}                  #{$t2}
+             --------            --------
+             I #{$b}   --------      I #{$u}   --------
+    DEALER   I     I######I      I     I #{$d}   --------     #{$nick}
+             I     I######I      I     I     I #{$c1}   --------
+             ------I######I      ------I     I     I #{$c2}   --------
+                   --------            ------I     I     I #{$c3}    I
+                                             ------I     I      I
+                                                   ------I      I
+                                                         --------
     ```"
 
   elsif $fuk == 0
@@ -485,8 +486,8 @@ $sira9 = "                                        "
     $sira2 = "             I #{$b}   --------                          "
     $sira3 = "    DEALER   I     I #{$i}   --------                    "
     $sira4 = "             I     I     I #{$kartlarc[0]}   --------              "
-    $sira5 = "             ------I     I     I #{$kartlarc[1]}   --------              "
-    $sira6 = "                   ------I     I     I #{$kartlarc[2]}    I              "
+    $sira5 = "             ------I     I     I #{$kartlarc[1]}   --------  "
+    $sira6 = "                   ------I     I     I #{$kartlarc[2]}    I  "
     $sira7 = "                         ------I     I      I              "
     $sira8 = "                               ------I      I              "
     $sira9 = "                                     --------                "
@@ -551,13 +552,23 @@ elsif $k == 3
   ```"
 
 end
-if $t2 > $t3 && $t2 < 21 || $t3 > 21
+dosya = File.read('data/puan.json')
+puanlar = JSON.parse(dosya)
+puan = puanlar[$nick]
+if puan == nil
+  puanlar[$nick] = 0
+  File.write('data/puan.json', puanlar.to_json)
+end
 
-    w = event.send "Tebrikler kazandınız."
+if $t2 > $t3 && $t2 < 21 || $t3 > 21
+  puanlar[$nick] += 1
+  File.write('data/puan.json', puanlar.to_json)
+
+        w = event.send "Tebrikler kazandınız.Puanınız: #{puanlar[$nick]}"
 
   else
 
-      l = event.send "Kaybettiniz."
+      l = event.send "Kaybettiniz.Puanınız: #{puanlar[$nick]}"
     end
         end
       end
