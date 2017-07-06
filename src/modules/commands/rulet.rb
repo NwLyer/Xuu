@@ -40,9 +40,9 @@ module Bot
             r.edit "#{a9}#{a10}#{a0}#{a11}#{a12}I#{win}I#{a13}#{a14}#{a15}#{a16}#{a17}"
 
                 if win == ":black_circle:"
-                    wrenk = black
+                    wrenk = "black"
         elsif win == "red_circle:"
-            wrenk = red
+            wrenk = "red"
           end
             if args == wrenk
               event.send "#{$nick} kazandınız."
