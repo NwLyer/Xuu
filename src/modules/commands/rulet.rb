@@ -24,23 +24,23 @@ module Bot
         win = array.sample
         a0 = array.sample
 
-    r = event.send "```#{a1}#{a2}#{a3}#{a4}#{a5}I#{a6}I#{a7}#{a8}#{a9}#{a10}#{a0}```"
+    r = event.send "#{a1}#{a2}#{a3}#{a4}#{a5}I#{a6}I#{a7}#{a8}#{a9}#{a10}#{a0}"
     sleep(0.1)
-            r.edit "```#{a2}#{a3}#{a4}#{a5}#{a6}I#{a7}I#{a8}#{a9}#{a10}#{a0}#{a11}```"
+            r.edit "#{a2}#{a3}#{a4}#{a5}#{a6}I#{a7}I#{a8}#{a9}#{a10}#{a0}#{a11}"
     sleep(0.1)
-            r.edit "```#{a3}#{a4}#{a5}#{a6}#{a7}I#{a8}I#{a9}#{a10}#{a0}#{a11}#{a12}```"
+            r.edit "#{a3}#{a4}#{a5}#{a6}#{a7}I#{a8}I#{a9}#{a10}#{a0}#{a11}#{a12}"
     sleep(0.1)
-            r.edit "```#{a4}#{a5}#{a6}#{a7}#{a8}I#{a9}I#{a10}#{a0}#{a11}#{a12}#{win}```"
+            r.edit "#{a4}#{a5}#{a6}#{a7}#{a8}I#{a9}I#{a10}#{a0}#{a11}#{a12}#{win}"
     sleep(0.1)
-            r.edit "```#{a5}#{a6}#{a7}#{a8}#{a9}I#{a10}I#{a0}#{a11}#{a12}#{win}#{a13}```"
+            r.edit "#{a5}#{a6}#{a7}#{a8}#{a9}I#{a10}I#{a0}#{a11}#{a12}#{win}#{a13}"
     sleep(0.1)
-            r.edit "```#{a6}#{a7}#{a8}#{a9}#{a10}I#{a0}I#{a11}#{a12}#{win}#{a13}#{a14}```"
+            r.edit "#{a6}#{a7}#{a8}#{a9}#{a10}I#{a0}I#{a11}#{a12}#{win}#{a13}#{a14}"
     sleep(0.1)
-            r.edit "```#{a7}#{a8}#{a9}#{a10}#{a0}I#{a11}I#{a12}#{win}#{a13}#{a14}#{a15}```"
+            r.edit "#{a7}#{a8}#{a9}#{a10}#{a0}I#{a11}I#{a12}#{win}#{a13}#{a14}#{a15}"
     sleep(0.1)
-            r.edit "```#{a8}#{a9}#{a10}#{a0}#{a11}I#{a12}I#{win}#{a13}#{a14}#{a15}#{a16}```"
+            r.edit "#{a8}#{a9}#{a10}#{a0}#{a11}I#{a12}I#{win}#{a13}#{a14}#{a15}#{a16}"
     sleep(0.1)
-            r.edit "```#{a9}#{a10}#{a0}#{a11}#{a12}I#{win}I#{a13}#{a14}#{a15}#{a16}#{a17}```"
+            r.edit "#{a9}#{a10}#{a0}#{a11}#{a12}I#{win}I#{a13}#{a14}#{a15}#{a16}#{a17}"
 
 if win == ":black_circle"
   wrenk = black
