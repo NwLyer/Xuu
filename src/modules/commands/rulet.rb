@@ -3,7 +3,7 @@ module Bot
     module Rulet
       extend Discordrb::Commands::CommandContainer
       command(:rulet, help_available: false) do |event, args|
-        array = [":black_circle",":red_circle"]
+        array = [":black_circle:",":red_circle:"]
         a1 = array.sample
         a2 = array.sample
         a3 = array.sample
@@ -24,7 +24,7 @@ module Bot
         win = array.sample
         a0 = array.sample
 
-    r = event.send "#{a1} #{a2} #{a3} #{a4} #{a5} I #{a6} I #{a7} #{a8} #{a9} #{a10 }#{a0}"
+    r = event.send "#{a1}#{a2}#{a3}#{a4}#{a5}I#{a6}I#{a7}#{a8}#{a9}#{a10}#{a0}"
     sleep(0.1)
             r.edit "#{a2}#{a3}#{a4}#{a5}#{a6}I#{a7}I#{a8}#{a9}#{a10}#{a0}#{a11}"
     sleep(0.1)
@@ -42,9 +42,9 @@ module Bot
     sleep(0.1)
             r.edit "#{a9}#{a10}#{a0}#{a11}#{a12}I#{win}I#{a13}#{a14}#{a15}#{a16}#{a17}"
 
-if win == ":black_circle"
+if win == ":black_circle:"
   wrenk = black
-elsif win == "red_circle"
+elsif win == "red_circle:"
   wrenk = red
 end
             if args == wrenk
