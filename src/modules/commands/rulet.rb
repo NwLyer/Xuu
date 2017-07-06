@@ -65,7 +65,7 @@ end
           end
 else
   event.send "*rulet black ya da *black red komutlarını kullanınız."
-
+end
       end
     end
   end
