@@ -1,8 +1,8 @@
 module Bot
   module DiscordCommands
-    module Rand
+    module Rulet
       extend Discordrb::Commands::CommandContainer
-      command(:rand, help_available: false) do |event, args|
+      command(:rulet, help_available: false) do |event, args|
         array = [":black_circle",":red_circle"]
         a1 = array.sample
         a2 = array.sample
