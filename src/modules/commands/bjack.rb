@@ -2,15 +2,20 @@
 module Bot
   module DiscordCommands
     $tekkisi = 0
+    $timeout = Time.new
     module Bjack
       extend Discordrb::Commands::CommandContainer
      command :bjack do |event|
+       if Time.now > $timeout
+            $tekkisi = 0
+       end
 if $tekkisi == 0
      $fuk = 0
      $dfuk = 0
      $tekkisi = 1
      $k = 0
      $cekmesayisi = 0
+     $timeout = Time.now + 30
     $nick = event.user.username
    $kartlar = ["1","2","3","4","5","6","7","8","9","X","J","Q","K","1","2","3","4","5","6","7","8","9","X","J","Q","K","1","2","3","4","5","6","7","8","9","X","J","Q","K","1","2","3","4","5","6","7","8","9","X","J","Q","K"]
    $b = $kartlar.sample
@@ -96,11 +101,15 @@ else
 event.send "Devam etmekte olan bir oyun var."
 end
 
+
 end
 end
 module Bcard
   extend Discordrb::Commands::CommandContainer
  command :bcard do |event|
+if $tekkisi == 0
+event.send "Yeni oyun başlatmak için *bjack"
+else
 
 if $nick != event.user.username
 event.send "Şu anda #{$nick} oynuyor."
@@ -388,6 +397,8 @@ Kalmak için *bdone
 end
 else
   event.send "Başka kart çekemezsiniz."
+end
+
 end
 end
 end
