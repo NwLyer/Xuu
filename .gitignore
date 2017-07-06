@@ -4,7 +4,7 @@
 /run.sh
 
 *.gem
-*.rbc
+.rbc
 /.config
 /coverage/
 /InstalledFiles
@@ -19,7 +19,7 @@
 # .env
 
 ## Specific to RubyMotion:
-.dat*
+.dat
 .repl_history
 build/
 *.bridgesupport
