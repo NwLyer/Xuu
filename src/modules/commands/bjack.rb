@@ -587,11 +587,11 @@ if $t2 > $t3 && $t2 < 21 || $t3 > 21
   $paralar[$id] += ($bet.to_i * 2)
   File.write('data/para.json', $paralar.to_json)
 
-        w = event.send "Tebrikler kazandınız.Puanınız: #{puanlar[$id]}"
+        w = event.send "Tebrikler kazandınız.Puanınız: #{paralar[$id]}"
 
   else
 
-      l = event.send "Kaybettiniz.Puanınız: #{puanlar[$id]}"
+      l = event.send "Kaybettiniz.Puanınız: #{paralar[$id]}"
     end
         end
       end
