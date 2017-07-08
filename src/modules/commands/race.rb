@@ -134,7 +134,7 @@ loop do
   break if ckare > 15
   break if dkare > 15
   break if ekare > 15
-  ilerleme = [2,3,3,4,4,5,6]
+  ilerleme = [2,3,3,4]
 arand = ilerleme.sample
 brand = ilerleme.sample
 crand = ilerleme.sample
@@ -1459,7 +1459,7 @@ end
             case args[0]
             when "1"
               if awin == ":horse_racing:"
-                $paralarace[$idrace.to_s] += (args[1].to_i * (6.0/oran)).ceil
+                $paralarace[$idrace.to_s] += (args[1].to_i * (5.0/oran)).ceil
                 File.write('data/para.json', $paralarace.to_json)
                 event.send "#{$nickrace} kazandınız.Paranız: #{$paralarace[$idrace.to_s]}"
                 $tekrarace = 0
@@ -1471,7 +1471,7 @@ end
                 end
             when "2"
               if bwin == ":horse_racing:"
-                $paralarace[$idrace.to_s] += (args[1].to_i * (6.0/oran)).ceil
+                $paralarace[$idrace.to_s] += (args[1].to_i * (5.0/oran)).ceil
                 File.write('data/para.json', $paralarace.to_json)
                 event.send "#{$nickrace} kazandınız.Paranız: #{$paralarace[$idrace.to_s]}"
                 $tekrarace = 0
@@ -1484,7 +1484,7 @@ end
 
             when "3"
               if cwin == ":horse_racing:"
-                $paralarace[$idrace.to_s] += (args[1].to_i * (6.0/oran)).ceil
+                $paralarace[$idrace.to_s] += (args[1].to_i * (5.0/oran)).ceil
                 File.write('data/para.json', $paralarace.to_json)
                 event.send "#{$nickrace} kazandınız.Paranız: #{$paralarace[$idrace.to_s]}"
                 $tekrarace = 0
@@ -1496,7 +1496,7 @@ end
                 end
             when "4"
               if dwin == ":horse_racing:"
-                $paralarace[$idrace.to_s] += (args[1].to_i * (6.0/oran)).ceil
+                $paralarace[$idrace.to_s] += (args[1].to_i * (5.0/oran)).ceil
                 File.write('data/para.json', $paralarace.to_json)
                 event.send "#{$nickrace} kazandınız.Paranız: #{$paralarace[$idrace.to_s]}"
                 $tekrarace = 0
@@ -1508,7 +1508,7 @@ end
                 end
               when "5"
                 if ewin == ":horse_racing:"
-                   $paralarace[$idrace.to_s] += (args[1].to_i * (6.0/oran)).ceil
+                   $paralarace[$idrace.to_s] += (args[1].to_i * (5.0/oran)).ceil
                   File.write('data/para.json', $paralarace.to_json)
                   event.send "#{$nickrace} kazandınız.Paranız: #{$paralarace[$idrace.to_s]}"
                   $tekrarace = 0
