@@ -17,10 +17,10 @@ module Bot
                 nil
               else
                   $paralarauto[$lul.uniq[$xauto].to_s] += 5
+                  File.write('data/para.json', $paralarauto.to_json)
               end
               $xauto += 1
             end
-            File.write('data/para.json', $paralarauto.to_json)
             sleep(60)
         end
       end

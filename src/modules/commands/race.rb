@@ -5,7 +5,7 @@ module Bot
       extend Discordrb::Commands::CommandContainer
       command(:race) do |event, *args|
         dosya = File.read('data/para.json')
-        paralar = JSON.parse(dosya)
+        $paralarace = JSON.parse(dosya)
         if args[1] == nil
           event.send "Bet miktarını giriniz.(*race 1 10)"
         elsif args[1].to_i < 10
@@ -15,18 +15,18 @@ module Bot
         if $tekrarace == 0
           $nickrace = event.user.username
           $idrace = event.user.id
-        if paralar[$idrace.to_s] == nil
-            paralar[$idrace.to_s] = 1000
-            File.write('data/para.json', paralar.to_json)
+        if $paralarace[$idrace.to_s] == nil
+             $paralarace[$idrace.to_s] = 1000
+            File.write('data/para.json',  $paralarace.to_json)
           end
-          if args[1].to_i > paralar[$idrace.to_s].to_i
+          if args[1].to_i > $paralarace[$idrace.to_s].to_i
             event.send "Yeterli paranız yok."
           else
 
           $tekrarace = 1
           $bet = args[1]
-          paralar[$idrace.to_s] -= args[1].to_i
-          File.write('data/para.json', paralar.to_json)
+           $paralarace[$idrace.to_s] -= args[1].to_i
+          File.write('data/para.json',  $paralarace.to_json)
 
 
 a0 = ":horse_racing:"
@@ -134,7 +134,7 @@ loop do
   break if ckare > 15
   break if dkare > 15
   break if ekare > 15
-  ilerleme = [2,3,3,3,4,4,5]
+  ilerleme = [2,3,3,4,4,5,6]
 arand = ilerleme.sample
 brand = ilerleme.sample
 crand = ilerleme.sample
@@ -1459,62 +1459,62 @@ end
             case args[0]
             when "1"
               if awin == ":horse_racing:"
-                paralar[$idrace.to_s] += (args[1].to_i * (6.0/oran)).ceil
-                File.write('data/para.json', $paralar.to_json)
-                event.send "#{$nickrace} kazandınız.Paranız: #{paralar[$idrace.to_s]}"
+                $paralarace[$idrace.to_s] += (args[1].to_i * (6.0/oran)).ceil
+                File.write('data/para.json', $paralarace.to_json)
+                event.send "#{$nickrace} kazandınız.Paranız: #{$paralarace[$idrace.to_s]}"
                 $tekrarace = 0
                 nil
               else
-                event.send "#{$nickrace} kaybettiniz.Paranız: #{paralar[$idrace.to_s]}"
+                event.send "#{$nickrace} kaybettiniz.Paranız: #{$paralarace[$idrace.to_s]}"
                 $tekrarace = 0
                 nil
                 end
             when "2"
               if bwin == ":horse_racing:"
-                paralar[$idrace.to_s] += (args[1].to_i * (6.0/oran)).ceil
-                File.write('data/para.json', paralar.to_json)
-                event.send "#{$nickrace} kazandınız.Paranız: #{paralar[$idrace.to_s]}"
+                $paralarace[$idrace.to_s] += (args[1].to_i * (6.0/oran)).ceil
+                File.write('data/para.json', $paralarace.to_json)
+                event.send "#{$nickrace} kazandınız.Paranız: #{$paralarace[$idrace.to_s]}"
                 $tekrarace = 0
                 nil
               else
-                event.send "#{$nickrace} kaybettiniz.Paranız: #{paralar[$idrace.to_s]}"
+                event.send "#{$nickrace} kaybettiniz.Paranız: #{$paralarace[$idrace.to_s]}"
                 $tekrarace = 0
                 nil
                 end
 
             when "3"
               if cwin == ":horse_racing:"
-                paralar[$idrace.to_s] += (args[1].to_i * (6.0/oran)).ceil
-                File.write('data/para.json', paralar.to_json)
-                event.send "#{$nickrace} kazandınız.Paranız: #{paralar[$idrace.to_s]}"
+                $paralarace[$idrace.to_s] += (args[1].to_i * (6.0/oran)).ceil
+                File.write('data/para.json', $paralarace.to_json)
+                event.send "#{$nickrace} kazandınız.Paranız: #{$paralarace[$idrace.to_s]}"
                 $tekrarace = 0
                 nil
               else
-                event.send "#{$nickrace} kaybettiniz.Paranız: #{paralar[$idrace.to_s]}"
+                event.send "#{$nickrace} kaybettiniz.Paranız: #{$paralarace[$idrace.to_s]}"
                 $tekrarace = 0
                 nil
                 end
             when "4"
               if dwin == ":horse_racing:"
-                paralar[$idrace.to_s] += (args[1].to_i * (6.0/oran)).ceil
-                File.write('data/para.json', paralar.to_json)
-                event.send "#{$nickrace} kazandınız.Paranız: #{paralar[$idrace.to_s]}"
+                $paralarace[$idrace.to_s] += (args[1].to_i * (6.0/oran)).ceil
+                File.write('data/para.json', $paralarace.to_json)
+                event.send "#{$nickrace} kazandınız.Paranız: #{$paralarace[$idrace.to_s]}"
                 $tekrarace = 0
                 nil
               else
-                event.send "#{$nickrace} kaybettiniz.Paranız: #{paralar[$idrace.to_s]}"
+                event.send "#{$nickrace} kaybettiniz.Paranız: #{$paralarace[$idrace.to_s]}"
                 $tekrarace = 0
                 nil
                 end
               when "5"
                 if ewin == ":horse_racing:"
-                  paralar[$idrace.to_s] += (args[1].to_i * (6.0/oran)).ceil
-                  File.write('data/para.json', $paralar.to_json)
-                  event.send "#{$nickrace} kazandınız.Paranız: #{paralar[$idrace.to_s]}"
+                   $paralarace[$idrace.to_s] += (args[1].to_i * (6.0/oran)).ceil
+                  File.write('data/para.json', $paralarace.to_json)
+                  event.send "#{$nickrace} kazandınız.Paranız: #{$paralarace[$idrace.to_s]}"
                   $tekrarace = 0
                   nil
                 else
-                  event.send "#{$nickrace} kaybettiniz.Paranız: #{paralar[$idrace.to_s]}"
+                  event.send "#{$nickrace} kaybettiniz.Paranız: #{$paralarace[$idrace.to_s]}"
                   $tekrarace = 0
                   nil
                   end
