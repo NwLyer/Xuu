@@ -6,7 +6,6 @@ module Bot
     module Bjack
       extend Discordrb::Commands::CommandContainer
      command :bjack do |event, args|
-           $id = event.user.id
     if args == nil
       event.send "Bet miktarını giriniz.(*bjack 10)"
 elsif args.to_i < 10
@@ -16,24 +15,29 @@ else
             $tekkisi = 0
        end
 if $tekkisi == 0
+
+  $nick = event.user.username
+  $idb = event.user.id
   $bet = args
   $dosya = File.read('data/para.json')
   $paralar = JSON.parse($dosya)
-  $para = $paralar[$id]
-  if $para == nil
-    $paralar[$id] = 1000 - args.to_i
-    File.write('data/para.json', $paralar.to_json)
-  else
-    $paralar[$id] -= args.to_i
-    File.write('data/para.json', $paralar.to_json)
-  end
+
+    if args[1].to_i > $paralar[$idb.to_s].to_i
+      event.send "Yeterli paranız yok."
+    else
+      if $paralar[$idb.to_s] == nil
+        $paralar[$idb.to_s] = (1000 - args.to_i)
+        File.write('data/para.json', $paralar.to_json)
+      else
+        $paralar[$idb.to_s] -= args.to_i
+        File.write('data/para.json', $paralar.to_json)
+      end
      $fuk = 0
      $dfuk = 0
      $tekkisi = 1
      $k = 0
      $cekmesayisi = 0
      $timeout = Time.now + 30
-    $nick = event.user.username
    $kartlar = ["1","2","3","4","5","6","7","8","9","X","J","Q","K","1","2","3","4","5","6","7","8","9","X","J","Q","K","1","2","3","4","5","6","7","8","9","X","J","Q","K","1","2","3","4","5","6","7","8","9","X","J","Q","K"]
    $b = $kartlar.sample
     $kartlar.delete_at($kartlar.find_index($b))
@@ -113,7 +117,7 @@ Kalmak için *bdone
  ```"
 
 end
-
+end
 else
 event.send "Devam etmekte olan bir oyun var."
 end
@@ -584,14 +588,14 @@ end
 
 
 if $t2 > $t3 && $t2 < 21 || $t3 > 21
-  $paralar[$id] += ($bet.to_i * 2)
+  $paralar[$idb.to_s] += ($bet.to_i * 2)
   File.write('data/para.json', $paralar.to_json)
 
-        w = event.send "Tebrikler kazandınız.Paranız: #{$paralar[$id]}"
+        w = event.send "Tebrikler kazandınız.Paranız: #{$paralar[$idb.to_s]}"
 
   else
 
-      l = event.send "Kaybettiniz.Paranız: #{$paralar[$id]}"
+      l = event.send "Kaybettiniz.Paranız: #{$paralar[$idb.to_s]}"
     end
         end
       end
