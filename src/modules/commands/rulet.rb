@@ -4,8 +4,8 @@ module Bot
     module Rulet
       extend Discordrb::Commands::CommandContainer
       command(:rulet) do |event, *args|
-        $dosya = File.read('data/para.json')
-        $paralar = JSON.parse($dosya)
+        dosya = File.read('data/para.json')
+        $paralarulet = JSON.parse(dosya)
         if args[1].to_i == nil
           event.send "Bet miktarını giriniz.(*rulet red 10)"
         elsif args[1].to_i < 10
@@ -15,18 +15,18 @@ module Bot
         if $tekrar == 0
           $nickr = event.user.username
           $id = event.user.id
-          if $paralar[$id.to_s] == nil
-            $paralar[$id.to_s] = 1000
-            File.write('data/para.json', $paralar.to_json)
+          if $paralarulet[$id.to_s] == nil
+            $paralarulet[$id.to_s] = 1000
+            File.write('data/para.json', $paralarulet.to_json)
           end
-          if args[1].to_i > $paralar[$id.to_s].to_i
+          if args[1].to_i > $paralarulet[$id.to_s].to_i
             event.send "Yeterli paranız yok."
           else
 
           $tekrar = 1
           $bet = args[1]
-          $paralar[$id.to_s] -= args[1].to_i
-          File.write('data/para.json', $paralar.to_json)
+          $paralarulet[$id.to_s] -= args[1].to_i
+          File.write('data/para.json', $paralarulet.to_json)
         array = [":black_circle:",":red_circle:",":black_circle:",":red_circle:",":black_circle:",":red_circle:",":black_circle:",":red_circle:",":black_circle:",":red_circle:",":black_circle:",":red_circle:",":black_circle:",":red_circle:","<:ruby:329628405056274442>"]
 a0 = array.sample
 a1 = array.sample
@@ -67,17 +67,17 @@ win = array.sample
             if args[0] == wrenk
 
               if wrenk == "ruby"
-                $paralar[$id.to_s] += (args[1].to_i * 14)
-                File.write('data/para.json', $paralar.to_json)
+                $paralarulet[$id.to_s] += (args[1].to_i * 14)
+                File.write('data/para.json', $paralarulet.to_json)
               else
-                $paralar[$id.to_s] += (args[1].to_i * 2)
-                File.write('data/para.json', $paralar.to_json)
+                $paralarulet[$id.to_s] += (args[1].to_i * 2)
+                File.write('data/para.json', $paralarulet.to_json)
               end
-              event.send "#{$nickr} kazandınız.Paranız: #{$paralar[$id.to_s]}"
+              event.send "#{$nickr} kazandınız.Paranız: #{$paralarulet[$id.to_s]}"
               $tekrar = 0
               nil
             else
-              event.send "#{$nickr} kaybettiniz.Paranız: #{$paralar[$id.to_s]}"
+              event.send "#{$nickr} kaybettiniz.Paranız: #{$paralarulet[$id.to_s]}"
               $tekrar = 0
               nil
             end

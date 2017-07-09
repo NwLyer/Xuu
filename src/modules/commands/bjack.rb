@@ -19,10 +19,10 @@ if $tekkisi == 0
   $nick = event.user.username
   $idb = event.user.id
   $bet = args
-  $dosya = File.read('data/para.json')
-  $paralar = JSON.parse($dosya)
+  dosya = File.read('data/para.json')
+  $paralar = JSON.parse(dosya)
 
-    if args[1].to_i > $paralar[$idb.to_s].to_i
+    if args.to_i > $paralar[$idb.to_s].to_i
       event.send "Yeterli paranız yok."
     else
       if $paralar[$idb.to_s] == nil

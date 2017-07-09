@@ -2,6 +2,7 @@
 require 'bundler/setup'
 require 'discordrb'
 require 'yaml'
+require 'httparty'
 
 # The main bot module.
 module Bot
