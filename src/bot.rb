@@ -4,7 +4,6 @@ require 'discordrb'
 require 'yaml'
 require 'httparty'
 require 'colorize'
-require 'unidecoder'
 
 # The main bot module.
 module Bot
