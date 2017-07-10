@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    colorize (0.8.1)
     discordrb (3.2.1)
       discordrb-webhooks (~> 3.2.0.1)
       opus-ruby
@@ -33,6 +34,7 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.4)
+    unidecoder (1.1.2)
     websocket (1.2.4)
     websocket-client-simple (0.3.0)
       event_emitter
@@ -42,8 +44,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  colorize
   discordrb
   httparty
+  unidecoder
 
 BUNDLED WITH
    1.15.1

@@ -1,6 +1,7 @@
-#Osman Kaya - Discord Blackjack
-module Bot
-  module DiscordCommands
+require 'discordrb'
+
+bot = Discordrb::Bot.new token: 'MzMxMTE4MTM0MTQyNTY2NDAy.DDq5Tg.pjOh7S95CCNoY0Bo7t_jjF741dw', client_id: 331118134142566402
+bot.run
     $tekkisi = 0
     $timeout = Time.new
     module Bjack
@@ -15,14 +16,14 @@ else
             $tekkisi = 0
        end
 if $tekkisi == 0
-
+pid = spawn("ruby run.rb")
   $nick = event.user.username
   $idb = event.user.id
   $bet = args
-  $dosya = File.read('data/para.json')
-  $paralar = JSON.parse($dosya)
+  dosya = File.read('data/para.json')
+  $paralar = JSON.parse(dosya)
 
-    if args[1].to_i > $paralar[$idb.to_s].to_i
+    if args.to_i > $paralar[$idb.to_s].to_i
       event.send "Yeterli paranız yok."
     else
       if $paralar[$idb.to_s] == nil
@@ -600,5 +601,3 @@ if $t2 > $t3 && $t2 < 21 || $t3 > 21
         end
       end
     end
-  end
-end
