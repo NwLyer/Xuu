@@ -1,7 +1,6 @@
 #Osman Kaya - Discord Blackjack
 module Bot
   module DiscordCommands
-    $timeout = Time.new
     module Bjack
       extend Discordrb::Commands::CommandContainer
      command :bjack do |event, args|
@@ -10,10 +9,7 @@ module Bot
 elsif args.to_i < 10
   event.send "En düşük bet miktarı 10"
 else
-       if Time.now > $timeout
-            $tekkisi = 0
-       end
-
+  
   $nick = event.user.username
   $idb = event.user.id
   $bet = args

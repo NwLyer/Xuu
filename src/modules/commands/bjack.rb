@@ -1,3 +1,4 @@
+=begin
 #Osman Kaya - Discord Blackjack
 module Bot
   module DiscordCommands
@@ -602,3 +603,4 @@ if $t2 > $t3 && $t2 < 21 || $t3 > 21
     end
   end
 end
+=end
