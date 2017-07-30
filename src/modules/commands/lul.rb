@@ -1,3 +1,4 @@
+=begin
 module Bot
   module DiscordCommands
     module Lul
@@ -47,3 +48,4 @@ end
     end
   end
 end
+=end

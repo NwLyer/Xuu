@@ -1,4 +1,3 @@
-=begin
 #Osman Kaya - Discord Blackjack
 module Bot
   module DiscordCommands
@@ -20,18 +19,18 @@ if $tekkisi == 0
   $nick = event.user.username
   $idb = event.user.id
   $bet = args
-  $dosya = File.read('data/para.json')
-  $paralar = JSON.parse($dosya)
+  $dosyab = File.read('data/para.json')
+  $paralarb = JSON.parse($dosyab)
 
-    if args[1].to_i > $paralar[$idb.to_s].to_i
+    if args[1].to_i > $paralarb[$idb.to_s].to_i
       event.send "Yeterli paranız yok."
     else
-      if $paralar[$idb.to_s] == nil
-        $paralar[$idb.to_s] = (1000 - args.to_i)
-        File.write('data/para.json', $paralar.to_json)
+      if $paralarb[$idb.to_s] == nil
+        $paralarb[$idb.to_s] = (100000 - args.to_i)
+        File.write('data/para.json', $paralarb.to_json)
       else
-        $paralar[$idb.to_s] -= args.to_i
-        File.write('data/para.json', $paralar.to_json)
+        $paralarb[$idb.to_s] -= args.to_i
+        File.write('data/para.json', $paralarb.to_json)
       end
      $fuk = 0
      $dfuk = 0
@@ -589,18 +588,20 @@ end
 
 
 if $t2 > $t3 && $t2 < 21 || $t3 > 21
-  $paralar[$idb.to_s] += ($bet.to_i * 2)
-  File.write('data/para.json', $paralar.to_json)
+  $dosyab = File.read('data/para.json')
+  $paralarb = JSON.parse($dosyab)
+  $paralarb[$idb.to_s] += ($bet.to_i * 2)
+  File.write('data/para.json', $paralarb.to_json)
 
-        w = event.send "Tebrikler kazandınız.Paranız: #{$paralar[$idb.to_s]}"
+        w = event.send "Tebrikler kazandınız.Paranız: #{$paralarb[$idb.to_s]}"
 
   else
-
-      l = event.send "Kaybettiniz.Paranız: #{$paralar[$idb.to_s]}"
+      $dosyab = File.read('data/para.json')
+      $paralarb = JSON.parse($dosyab)
+      event.send "Kaybettiniz.Paranız: #{$paralarb[$idb.to_s]}"
     end
         end
       end
     end
   end
 end
-=end

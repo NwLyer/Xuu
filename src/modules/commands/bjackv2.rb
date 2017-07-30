@@ -1,3 +1,4 @@
+=begin
 #Osman Kaya - Discord Blackjack
 module Bot
   module DiscordCommands
@@ -120,3 +121,4 @@ end
 end
   end
 end
+=end

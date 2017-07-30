@@ -3,7 +3,7 @@ require 'bundler/setup'
 require 'discordrb'
 require 'yaml'
 require 'httparty'
-require 'colorize'
+require 'rest-client'
 
 # The main bot module.
 module Bot

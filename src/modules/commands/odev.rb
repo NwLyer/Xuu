@@ -1,3 +1,4 @@
+=begin
 module Bot
   module DiscordCommands
     module IdSex
@@ -37,3 +38,4 @@ Rank = #{lulflex["rank"]}
       end
     end
   end
+=end

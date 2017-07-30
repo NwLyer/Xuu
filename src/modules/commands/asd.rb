@@ -1,3 +1,4 @@
+=begin
 module Bot
   module DiscordCommands
     module Lolrundetay1
@@ -81,3 +82,4 @@ module Bot
 end
 end
 end
+=end

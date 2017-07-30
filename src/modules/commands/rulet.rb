@@ -16,7 +16,7 @@ module Bot
           $nickr = event.user.username
           $id = event.user.id
           if $paralarulet[$id.to_s] == nil
-            $paralarulet[$id.to_s] = 1000
+            $paralarulet[$id.to_s] = 100000
             File.write('data/para.json', $paralarulet.to_json)
           end
           if args[1].to_i > $paralarulet[$id.to_s].to_i
@@ -67,9 +67,13 @@ win = array.sample
             if args[0] == wrenk
 
               if wrenk == "ruby"
+                dosya = File.read('data/para.json')
+                $paralarulet = JSON.parse(dosya)
                 $paralarulet[$id.to_s] += (args[1].to_i * 14)
                 File.write('data/para.json', $paralarulet.to_json)
               else
+                dosya = File.read('data/para.json')
+                $paralarulet = JSON.parse(dosya)
                 $paralarulet[$id.to_s] += (args[1].to_i * 2)
                 File.write('data/para.json', $paralarulet.to_json)
               end

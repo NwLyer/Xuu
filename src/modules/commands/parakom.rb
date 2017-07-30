@@ -8,7 +8,7 @@ module Bot
         dosya = File.read('data/para.json')
         paralar = JSON.parse(dosya)
         if paralar[id.to_s] == nil
-          paralar[id.to_s] = 1000
+          paralar[id.to_s] = 100000
           File.write('data/para.json', paralar.to_json)
         end
         event.send "#{nick} paranız:#{paralar[id.to_s]}"

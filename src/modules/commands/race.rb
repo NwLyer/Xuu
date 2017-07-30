@@ -16,7 +16,7 @@ module Bot
           $nickrace = event.user.username
           $idrace = event.user.id
         if $paralarace[$idrace.to_s] == nil
-             $paralarace[$idrace.to_s] = 1000
+             $paralarace[$idrace.to_s] = 100000
             File.write('data/para.json',  $paralarace.to_json)
           end
           if args[1].to_i > $paralarace[$idrace.to_s].to_i
@@ -1458,6 +1458,8 @@ sleep(1)
 end
             case args[0]
             when "1"
+              dosya = File.read('data/para.json')
+              $paralarace = JSON.parse(dosya)
               if awin == ":horse_racing:"
                 $paralarace[$idrace.to_s] += (args[1].to_i * (5.0/oran)).ceil
                 File.write('data/para.json', $paralarace.to_json)
@@ -1470,6 +1472,8 @@ end
                 nil
                 end
             when "2"
+              dosya = File.read('data/para.json')
+              $paralarace = JSON.parse(dosya)
               if bwin == ":horse_racing:"
                 $paralarace[$idrace.to_s] += (args[1].to_i * (5.0/oran)).ceil
                 File.write('data/para.json', $paralarace.to_json)
@@ -1483,6 +1487,8 @@ end
                 end
 
             when "3"
+              dosya = File.read('data/para.json')
+              $paralarace = JSON.parse(dosya)
               if cwin == ":horse_racing:"
                 $paralarace[$idrace.to_s] += (args[1].to_i * (5.0/oran)).ceil
                 File.write('data/para.json', $paralarace.to_json)
@@ -1495,6 +1501,8 @@ end
                 nil
                 end
             when "4"
+              dosya = File.read('data/para.json')
+              $paralarace = JSON.parse(dosya)
               if dwin == ":horse_racing:"
                 $paralarace[$idrace.to_s] += (args[1].to_i * (5.0/oran)).ceil
                 File.write('data/para.json', $paralarace.to_json)
@@ -1507,6 +1515,8 @@ end
                 nil
                 end
               when "5"
+                dosya = File.read('data/para.json')
+                $paralarace = JSON.parse(dosya)
                 if ewin == ":horse_racing:"
                    $paralarace[$idrace.to_s] += (args[1].to_i * (5.0/oran)).ceil
                   File.write('data/para.json', $paralarace.to_json)
