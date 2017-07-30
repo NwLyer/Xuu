@@ -134,12 +134,17 @@ loop do
   break if ckare > 15
   break if dkare > 15
   break if ekare > 15
-  ilerleme = [2,3,3,4]
+  ilerleme = [2,3,4,5,6]
 arand = ilerleme.sample
+ilerleme.delete(arand)
 brand = ilerleme.sample
+ilerleme.delete(brand)
 crand = ilerleme.sample
+ilerleme.delete(crand)
 drand = ilerleme.sample
+ilerleme.delete(drand)
 erand = ilerleme.sample
+ilerleme.delete(erand)
 
 akare += arand
 bkare += brand
