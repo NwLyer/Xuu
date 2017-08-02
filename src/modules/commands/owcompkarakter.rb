@@ -1,3 +1,4 @@
+=begin
 module Bot
   module DiscordCommands
     module Owcompkarakter
@@ -58,3 +59,4 @@ module Bot
 end
 end
 end
+=end

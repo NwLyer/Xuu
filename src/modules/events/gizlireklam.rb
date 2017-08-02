@@ -1,3 +1,4 @@
+=begin
 module Bot
   module DiscordEvents
     module Reklam1
@@ -17,3 +18,4 @@ end
 end
   end
 end
+=end

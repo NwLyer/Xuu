@@ -1,3 +1,4 @@
+=begin
 #Osman Kaya - Discord Blackjack
 module Bot
   module DiscordCommands
@@ -22,7 +23,7 @@ if $tekkisi == 0
   $dosyab = File.read('data/para.json')
   $paralarb = JSON.parse($dosyab)
 
-    if args[1].to_i > $paralarb[$idb.to_s].to_i
+    if args.to_i > $paralarb[$idb.to_s].to_i
       event.send "Yeterli paranız yok."
     else
       if $paralarb[$idb.to_s] == nil
@@ -149,6 +150,7 @@ $fuk += 1
 else
 $c1t = $c1.to_i
 end
+$t2 += $c1t
 
  n = event.send " ```
               #{$t0}                  #{$t2}
@@ -161,7 +163,7 @@ DEALER   I     I######I      I     I #{$d}    I   #{$nick}
                                                I      I
                                                --------
 ```"
-sleep(1)
+sleep(0.6)
 n.edit " ```
              #{$t0}                 #{$t2}
          --------            --------
@@ -173,9 +175,8 @@ DEALER   I     I######I      I     I #{$d}    I       #{$nick}
                                             I      I
                                             --------
 ```"
-sleep(1)
+sleep(0.6)
 
-$t2 += $c1t
 
 if $t2 > 21
   if $fuk > 0
@@ -238,7 +239,7 @@ elsif $c2 == "1"
 else
  $c2t = $c2.to_i
 end
-
+$t2 += $c2t
 o = event.send " ```
               #{$t0}                  #{$t2}
          --------            --------
@@ -266,8 +267,6 @@ DEALER   I     I######I      I     I #{$d}   --------     #{$nick}
 
 ```"
 sleep(0.5)
-
-$t2 += $c2t
 
 if $t2 > 21
   if $fuk > 0
@@ -331,6 +330,7 @@ elsif $c3 == "1"
 else
  $c3t = $c3.to_i
 end
+$t2 += $c3t
 
 k = event.send " ```
               #{$t0}                  #{$t2}
@@ -363,7 +363,6 @@ DEALER   I     I######I      I     I #{$d}   --------     #{$nick}
 ```"
 sleep(0.5)
 
-$t2 += $c3t
 
 if $t2 > 21
   if $fuk > 0
@@ -605,3 +604,4 @@ if $t2 > $t3 && $t2 < 21 || $t3 > 21
     end
   end
 end
+=end

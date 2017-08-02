@@ -18,12 +18,12 @@ module Bot
               if $paralarauto[$lul.uniq[$xauto].to_s] == nil
                 nil
               else
-                  $paralarauto[$lul.uniq[$xauto].to_s] += 500
+                  $paralarauto[$lul.uniq[$xauto].to_s] += 2500
                   File.write('data/para.json', $paralarauto.to_json)
               end
               $xauto += 1
             end
-            sleep(60)
+            sleep(600)
         end
       end
     end

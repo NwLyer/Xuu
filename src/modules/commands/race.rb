@@ -1,32 +1,30 @@
 module Bot
   module DiscordCommands
-    $tekrarace = 0
     module Race
       extend Discordrb::Commands::CommandContainer
       command(:race) do |event, *args|
         dosya = File.read('data/para.json')
-        $paralarace = JSON.parse(dosya)
+        paralarace = JSON.parse(dosya)
         if args[1] == nil
-          event.send "Bet miktarını giriniz.(*race 1 10)"
-        elsif args[1].to_i < 10
-          event.send "En düşük bet miktarı 10"
+          event.send "Bet miktarını giriniz.(*race at bet)"
+        elsif 0 < args[1].to_i && args[1].to_i < 1000
+          event.send "En düşük bet miktarı 1000"
         else
     if args[0].to_i == 1 || args[0].to_i == 2 || args[0].to_i == 3 || args[0].to_i == 4 || args[0].to_i == 5
-        if $tekrarace == 0
-          $nickrace = event.user.username
-          $idrace = event.user.id
-        if $paralarace[$idrace.to_s] == nil
-             $paralarace[$idrace.to_s] = 100000
-            File.write('data/para.json',  $paralarace.to_json)
+          nickrace = event.user.username
+          idrace = event.user.id
+        if paralarace[idrace.to_s] == nil
+             paralarace[idrace.to_s] = 100000
+            File.write('data/para.json',  paralarace.to_json)
           end
-          if args[1].to_i > $paralarace[$idrace.to_s].to_i
-            event.send "Yeterli paranız yok."
+          if args[1].to_i > paralarace[idrace.to_s].to_i
+            event.send "Yeterli paranız yok.Paranız: #{paralarace[idrace.to_s]}"
           else
 
-          $tekrarace = 1
-          $bet = args[1]
-           $paralarace[$idrace.to_s] -= args[1].to_i
-          File.write('data/para.json',  $paralarace.to_json)
+          tekrarace = 1
+          bet = args[1]
+           paralarace[idrace.to_s] -= args[1].to_i
+          File.write('data/para.json',  paralarace.to_json)
 
 
 a0 = ":horse_racing:"
@@ -118,7 +116,7 @@ ewin = ":heavy_minus_sign:"
 racemsg = event.send "
 #{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
 #{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
-#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:
+#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:  #{nickrace}
 #{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
 #{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:
 "
@@ -392,6 +390,7 @@ when 15
   a14 = ":heavy_minus_sign:"
   a15 = ":horse_racing:"
 else
+  if akare >= bkare && akare >= ckare && akare >= dkare && akare >= ekare
   a0 = ":heavy_minus_sign:"
   a1 = ":heavy_minus_sign:"
   a2 = ":heavy_minus_sign:"
@@ -410,6 +409,24 @@ else
   a15 = ":heavy_minus_sign:"
   awin = ":horse_racing:"
   oran += 1
+else
+  a0 = ":heavy_minus_sign:"
+  a1 = ":heavy_minus_sign:"
+  a2 = ":heavy_minus_sign:"
+  a3 = ":heavy_minus_sign:"
+  a4 = ":heavy_minus_sign:"
+  a5 = ":heavy_minus_sign:"
+  a6 = ":heavy_minus_sign:"
+  a7 = ":heavy_minus_sign:"
+  a8 = ":heavy_minus_sign:"
+  a9 = ":heavy_minus_sign:"
+  a10 = ":heavy_minus_sign:"
+  a11 = ":heavy_minus_sign:"
+  a12 = ":heavy_minus_sign:"
+  a13 = ":heavy_minus_sign:"
+  a14 = ":heavy_minus_sign:"
+  a15 = ":horse_racing:"
+end
 end
 
 case bkare
@@ -652,6 +669,7 @@ when 15
   b14 = ":heavy_minus_sign:"
   b15 = ":horse_racing:"
 else
+  if bkare >= akare && bkare >= ckare && bkare >= dkare && bkare >= ekare
   b0 = ":heavy_minus_sign:"
   b1 = ":heavy_minus_sign:"
   b2 = ":heavy_minus_sign:"
@@ -670,6 +688,24 @@ else
   b15 = ":heavy_minus_sign:"
   bwin = ":horse_racing:"
   oran += 1
+else
+  b0 = ":heavy_minus_sign:"
+  b1 = ":heavy_minus_sign:"
+  b2 = ":heavy_minus_sign:"
+  b3 = ":heavy_minus_sign:"
+  b4 = ":heavy_minus_sign:"
+  b5 = ":heavy_minus_sign:"
+  b6 = ":heavy_minus_sign:"
+  b7 = ":heavy_minus_sign:"
+  b8 = ":heavy_minus_sign:"
+  b9 = ":heavy_minus_sign:"
+  b10 = ":heavy_minus_sign:"
+  b11 = ":heavy_minus_sign:"
+  b12 = ":heavy_minus_sign:"
+  b13 = ":heavy_minus_sign:"
+  b14 = ":heavy_minus_sign:"
+  b15 = ":horse_racing:"
+end
 end
 
 case ckare
@@ -912,6 +948,7 @@ when 15
   c14 = ":heavy_minus_sign:"
   c15 = ":horse_racing:"
 else
+  if ckare >= akare && ckare >= bkare && ckare >= dkare && ckare >= ekare
   c0 = ":heavy_minus_sign:"
   c1 = ":heavy_minus_sign:"
   c2 = ":heavy_minus_sign:"
@@ -930,6 +967,24 @@ else
   c15 = ":heavy_minus_sign:"
   cwin = ":horse_racing:"
   oran += 1
+else
+end
+c0 = ":heavy_minus_sign:"
+c1 = ":heavy_minus_sign:"
+c2 = ":heavy_minus_sign:"
+c3 = ":heavy_minus_sign:"
+c4 = ":heavy_minus_sign:"
+c5 = ":heavy_minus_sign:"
+c6 = ":heavy_minus_sign:"
+c7 = ":heavy_minus_sign:"
+c8 = ":heavy_minus_sign:"
+c9 = ":heavy_minus_sign:"
+c10 = ":heavy_minus_sign:"
+c11 = ":heavy_minus_sign:"
+c12 = ":heavy_minus_sign:"
+c13 = ":heavy_minus_sign:"
+c14 = ":heavy_minus_sign:"
+c15 = ":horse_racing:"
 end
 
 case dkare
@@ -1172,6 +1227,7 @@ when 15
   d14 = ":heavy_minus_sign:"
   d15 = ":horse_racing:"
 else
+  if dkare >= akare && dkare >= bkare && dkare >= ckare && dkare >= ekare
   d0 = ":heavy_minus_sign:"
   d1 = ":heavy_minus_sign:"
   d2 = ":heavy_minus_sign:"
@@ -1190,6 +1246,24 @@ else
   d15 = ":heavy_minus_sign:"
   dwin = ":horse_racing:"
   oran += 1
+else
+  d0 = ":heavy_minus_sign:"
+  d1 = ":heavy_minus_sign:"
+  d2 = ":heavy_minus_sign:"
+  d3 = ":heavy_minus_sign:"
+  d4 = ":heavy_minus_sign:"
+  d5 = ":heavy_minus_sign:"
+  d6 = ":heavy_minus_sign:"
+  d7 = ":heavy_minus_sign:"
+  d8 = ":heavy_minus_sign:"
+  d9 = ":heavy_minus_sign:"
+  d10 = ":heavy_minus_sign:"
+  d11 = ":heavy_minus_sign:"
+  d12 = ":heavy_minus_sign:"
+  d13 = ":heavy_minus_sign:"
+  d14 = ":heavy_minus_sign:"
+  d15 = ":horse_racing:"
+end
 end
 
 
@@ -1433,6 +1507,7 @@ when 15
   e14 = ":heavy_minus_sign:"
   e15 = ":horse_racing:"
 else
+  if ekare >= akare && ekare >= bkare && ekare >= ckare && ekare >= dkare
   e0 = ":heavy_minus_sign:"
   e1 = ":heavy_minus_sign:"
   e2 = ":heavy_minus_sign:"
@@ -1451,11 +1526,29 @@ else
   e15 = ":heavy_minus_sign:"
   ewin = ":horse_racing:"
   oran += 1
+else
+  e0 = ":heavy_minus_sign:"
+  e1 = ":heavy_minus_sign:"
+  e2 = ":heavy_minus_sign:"
+  e3 = ":heavy_minus_sign:"
+  e4 = ":heavy_minus_sign:"
+  e5 = ":heavy_minus_sign:"
+  e6 = ":heavy_minus_sign:"
+  e7 = ":heavy_minus_sign:"
+  e8 = ":heavy_minus_sign:"
+  e9 = ":heavy_minus_sign:"
+  e10 = ":heavy_minus_sign:"
+  e11 = ":heavy_minus_sign:"
+  e12 = ":heavy_minus_sign:"
+  e13 = ":heavy_minus_sign:"
+  e14 = ":heavy_minus_sign:"
+  e15 = ":horse_racing:"
+end
 end
 racemsg.edit "
 #{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
 #{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
-#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:
+#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:  #{nickrace}
 #{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
 #{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:
 "
@@ -1464,73 +1557,123 @@ end
             case args[0]
             when "1"
               dosya = File.read('data/para.json')
-              $paralarace = JSON.parse(dosya)
+              paralarace = JSON.parse(dosya)
               if awin == ":horse_racing:"
-                $paralarace[$idrace.to_s] += (args[1].to_i * (5.0/oran)).ceil
-                File.write('data/para.json', $paralarace.to_json)
-                event.send "#{$nickrace} kazandınız.Paranız: #{$paralarace[$idrace.to_s]}"
-                $tekrarace = 0
+                paralarace[idrace.to_s] += (args[1].to_i * (5.0/oran)).ceil
+                File.write('data/para.json', paralarace.to_json)
+racemsg.edit "
+#{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
+#{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
+#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:  #{nickrace} kazandınız.Paranız: #{paralarace[idrace.to_s]}
+#{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
+#{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:
+"
                 nil
               else
-                event.send "#{$nickrace} kaybettiniz.Paranız: #{$paralarace[$idrace.to_s]}"
-                $tekrarace = 0
+racemsg.edit "
+#{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
+#{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
+#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:  #{nickrace} kaybettiniz.Paranız: #{paralarace[idrace.to_s]}
+#{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
+#{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:
+"
                 nil
                 end
             when "2"
               dosya = File.read('data/para.json')
-              $paralarace = JSON.parse(dosya)
+              paralarace = JSON.parse(dosya)
               if bwin == ":horse_racing:"
-                $paralarace[$idrace.to_s] += (args[1].to_i * (5.0/oran)).ceil
-                File.write('data/para.json', $paralarace.to_json)
-                event.send "#{$nickrace} kazandınız.Paranız: #{$paralarace[$idrace.to_s]}"
-                $tekrarace = 0
+                paralarace[idrace.to_s] += (args[1].to_i * (5.0/oran)).ceil
+                File.write('data/para.json', paralarace.to_json)
+racemsg.edit "
+#{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
+#{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
+#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:  #{nickrace} kazandınız.Paranız: #{paralarace[idrace.to_s]}
+#{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
+#{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:
+"
                 nil
               else
-                event.send "#{$nickrace} kaybettiniz.Paranız: #{$paralarace[$idrace.to_s]}"
-                $tekrarace = 0
+racemsg.edit "
+#{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
+#{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
+#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:  #{nickrace} kaybettiniz.Paranız: #{paralarace[idrace.to_s]}
+#{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
+#{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:
+"
                 nil
                 end
 
             when "3"
               dosya = File.read('data/para.json')
-              $paralarace = JSON.parse(dosya)
+              paralarace = JSON.parse(dosya)
               if cwin == ":horse_racing:"
-                $paralarace[$idrace.to_s] += (args[1].to_i * (5.0/oran)).ceil
-                File.write('data/para.json', $paralarace.to_json)
-                event.send "#{$nickrace} kazandınız.Paranız: #{$paralarace[$idrace.to_s]}"
-                $tekrarace = 0
+                paralarace[idrace.to_s] += (args[1].to_i * (5.0/oran)).ceil
+                File.write('data/para.json', paralarace.to_json)
+racemsg.edit "
+#{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
+#{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
+#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:  #{nickrace} kazandınız.Paranız: #{paralarace[idrace.to_s]}
+#{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
+#{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:
+"
                 nil
               else
-                event.send "#{$nickrace} kaybettiniz.Paranız: #{$paralarace[$idrace.to_s]}"
-                $tekrarace = 0
+racemsg.edit "
+#{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
+#{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
+#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:  #{nickrace} kaybettiniz.Paranız: #{paralarace[idrace.to_s]}
+#{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
+#{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:
+"
                 nil
                 end
             when "4"
               dosya = File.read('data/para.json')
-              $paralarace = JSON.parse(dosya)
+              paralarace = JSON.parse(dosya)
               if dwin == ":horse_racing:"
-                $paralarace[$idrace.to_s] += (args[1].to_i * (5.0/oran)).ceil
-                File.write('data/para.json', $paralarace.to_json)
-                event.send "#{$nickrace} kazandınız.Paranız: #{$paralarace[$idrace.to_s]}"
-                $tekrarace = 0
+                paralarace[idrace.to_s] += (args[1].to_i * (5.0/oran)).ceil
+                File.write('data/para.json', paralarace.to_json)
+racemsg.edit "
+#{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
+#{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
+#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:  #{nickrace} kazandınız.Paranız: #{paralarace[idrace.to_s]}
+#{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
+#{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:
+"
                 nil
               else
-                event.send "#{$nickrace} kaybettiniz.Paranız: #{$paralarace[$idrace.to_s]}"
-                $tekrarace = 0
+racemsg.edit "
+#{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
+#{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
+#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:  #{nickrace} kaybettiniz.Paranız: #{paralarace[idrace.to_s]}
+#{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
+#{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:
+"
                 nil
                 end
               when "5"
                 dosya = File.read('data/para.json')
-                $paralarace = JSON.parse(dosya)
+                paralarace = JSON.parse(dosya)
                 if ewin == ":horse_racing:"
-                   $paralarace[$idrace.to_s] += (args[1].to_i * (5.0/oran)).ceil
-                  File.write('data/para.json', $paralarace.to_json)
-                  event.send "#{$nickrace} kazandınız.Paranız: #{$paralarace[$idrace.to_s]}"
-                  $tekrarace = 0
+                   paralarace[idrace.to_s] += (args[1].to_i * (5.0/oran)).ceil
+                  File.write('data/para.json', paralarace.to_json)
+racemsg.edit "
+#{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
+#{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
+#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:  #{nickrace} kazandınız.Paranız: #{paralarace[idrace.to_s]}
+#{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
+#{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:
+"
                   nil
                 else
-                  event.send "#{$nickrace} kaybettiniz.Paranız: #{$paralarace[$idrace.to_s]}"
-                  $tekrarace = 0
+  racemsg.edit "
+  #{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
+  #{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
+  #{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:  #{nickrace} kaybettiniz.Paranız: #{paralarace[idrace.to_s]}
+  #{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
+  #{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:
+  "
                   nil
                   end
             end
@@ -1541,10 +1684,6 @@ end
 
           end
 
-
-        else
-            event.send "Devam etmekte olan bir oyun var."
-      end
 else
   event.send "*race at bet komutunu kullanınız.(*race 1 10)"
 end
