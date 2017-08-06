@@ -20,7 +20,18 @@ module Bot
           if args[1].to_i > paralarace[idrace.to_s].to_i
             event.send "Yeterli paranız yok.Paranız: #{paralarace[idrace.to_s]}"
           else
-
+	case args[0].to_i
+	when 1
+	  bet1 = nickrace
+	when 2
+	  bet2 = nickrace
+	when 3
+	  bet3 = nickrace
+	when 4
+	  bet4 = nickrace
+	when 5
+	  bet5 = nickrace
+	end
           tekrarace = 1
           bet = args[1]
            paralarace[idrace.to_s] -= args[1].to_i
@@ -114,11 +125,11 @@ e15 = ":heavy_minus_sign:"
 ewin = ":heavy_minus_sign:"
 
 racemsg = event.send "
-#{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
-#{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
-#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:  #{nickrace}
-#{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
-#{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:
+#{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:	#{bet1}
+#{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:	#{bet2}
+#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:	#{bet3}
+#{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:	#{bet4}
+#{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:	#{bet5}
 "
 akare = 0
 bkare = 0
@@ -968,7 +979,6 @@ else
   cwin = ":horse_racing:"
   oran += 1
 else
-end
 c0 = ":heavy_minus_sign:"
 c1 = ":heavy_minus_sign:"
 c2 = ":heavy_minus_sign:"
@@ -985,6 +995,7 @@ c12 = ":heavy_minus_sign:"
 c13 = ":heavy_minus_sign:"
 c14 = ":heavy_minus_sign:"
 c15 = ":horse_racing:"
+end
 end
 
 case dkare
@@ -1546,11 +1557,11 @@ else
 end
 end
 racemsg.edit "
-#{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
-#{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
-#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:  #{nickrace}
-#{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
-#{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:
+#{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:	#{bet1}
+#{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:	#{bet2}
+#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:	#{bet3}
+#{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:	#{bet4}
+#{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:	#{bet5}
 "
 sleep(1)
 end
@@ -1562,18 +1573,18 @@ end
                 paralarace[idrace.to_s] += (args[1].to_i * (5.0/oran)).ceil
                 File.write('data/para.json', paralarace.to_json)
 racemsg.edit "
-#{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
+#{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:	#{nickrace} kazandınız.Paranız: #{paralarace[idrace.to_s]}
 #{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
-#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:  #{nickrace} kazandınız.Paranız: #{paralarace[idrace.to_s]}
+#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:
 #{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
 #{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:
 "
                 nil
               else
 racemsg.edit "
-#{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
+#{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:	#{nickrace} kaybettiniz.Paranız: #{paralarace[idrace.to_s]}
 #{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
-#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:  #{nickrace} kaybettiniz.Paranız: #{paralarace[idrace.to_s]}
+#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:
 #{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
 #{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:
 "
@@ -1587,8 +1598,8 @@ racemsg.edit "
                 File.write('data/para.json', paralarace.to_json)
 racemsg.edit "
 #{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
-#{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
-#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:  #{nickrace} kazandınız.Paranız: #{paralarace[idrace.to_s]}
+#{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:	#{nickrace} kazandınız.Paranız: #{paralarace[idrace.to_s]}
+#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:
 #{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
 #{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:
 "
@@ -1596,8 +1607,8 @@ racemsg.edit "
               else
 racemsg.edit "
 #{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
-#{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
-#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:  #{nickrace} kaybettiniz.Paranız: #{paralarace[idrace.to_s]}
+#{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:	#{nickrace} kaybettiniz.Paranız: #{paralarace[idrace.to_s]}
+#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:
 #{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
 #{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:
 "
@@ -1637,8 +1648,8 @@ racemsg.edit "
 racemsg.edit "
 #{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
 #{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
-#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:  #{nickrace} kazandınız.Paranız: #{paralarace[idrace.to_s]}
-#{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
+#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:
+#{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:	#{nickrace} kazandınız.Paranız: #{paralarace[idrace.to_s]}
 #{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:
 "
                 nil
@@ -1646,8 +1657,8 @@ racemsg.edit "
 racemsg.edit "
 #{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
 #{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
-#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:  #{nickrace} kaybettiniz.Paranız: #{paralarace[idrace.to_s]}
-#{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
+#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:
+#{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:	#{nickrace} kaybettiniz.Paranız: #{paralarace[idrace.to_s]}
 #{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:
 "
                 nil
@@ -1661,18 +1672,18 @@ racemsg.edit "
 racemsg.edit "
 #{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
 #{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
-#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:  #{nickrace} kazandınız.Paranız: #{paralarace[idrace.to_s]}
+#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:
 #{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
-#{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:
+#{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:	#{nickrace} kazandınız.Paranız: #{paralarace[idrace.to_s]}
 "
                   nil
                 else
   racemsg.edit "
   #{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
   #{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
-  #{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:  #{nickrace} kaybettiniz.Paranız: #{paralarace[idrace.to_s]}
+  #{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:
   #{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
-  #{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:
+  #{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:	#{nickrace} kaybettiniz.Paranız: #{paralarace[idrace.to_s]}
   "
                   nil
                   end

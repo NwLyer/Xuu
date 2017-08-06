@@ -1,3 +1,4 @@
+=begin
 module Bot
   module DiscordCommands
     # Command for evaluating Ruby code in an active bot.
@@ -16,3 +17,4 @@ module Bot
     end
   end
 end
+=end

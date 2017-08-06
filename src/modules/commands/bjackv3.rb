@@ -83,38 +83,18 @@ module Bot
             t2 = ut + dt
             t0 = bt
 
-            if t2 > 21
-              if fuk > 0
-                t2 -= 10
-                fuk -= 1
-              else
-
-        m = event.send " ```
-                  #{t0}                #{t2}
-            --------            --------
-            I #{b}   --------      I #{u}   --------
-   DEALER   I     I######I      I     I #{d}    I   #{nick}
-            I     I######I      I     I      I
-            ------I######I      ------I      I
-                  --------            --------
-
-```"
-              end
-            else
 
       m = event.send " ```
                 #{t0}                #{t2}
           --------            --------
           I #{b}   --------      I #{u}   --------
- DEALER   I     I######I      I     I #{d}    I   #{nick}
+ DEALER   I     I######I      I     I #{d}    I    #{nick}
           I     I######I      I     I      I
           ------I######I      ------I      I
                 --------            --------
  Kart çekmek için *bcard
  Kalmak için *bdone
 ```"
-
-            end
             # bjack v3
             bjackcur = JSON.parse(File.read('data/bjackcur.json'))
             players = bjackcur['currentplayers']
@@ -167,6 +147,25 @@ end
             end
             t2 += c1t
 
+#2 kart gösterlmesi sorunu fix <3
+
+            if t2 > 21
+              if fuk > 0
+                t2 -= 10
+                fuk -= 1
+              elsif fuk == 0
+                #gg
+              end
+              else
+                #21 geçmedi devam aslan
+              end
+
+              bjackcur = JSON.parse(File.read('data/bjackcur.json'))
+              players = bjackcur['currentplayers']
+              players[idb] = players[idb].merge(Hash['fuk', fuk, 'dfuk', dfuk, 'k', k, 'kartlar', kartlar, 't1', t1, 't2', t2, 't0', t0, 'c1', c1])
+              File.write('data/bjackcur.json', bjackcur.to_json)
+              nil
+
   n = event.send " ```
                #{t0}                  #{t2}
           --------            --------
@@ -178,6 +177,8 @@ end
                                                 I      I
                                                 --------
  ```"
+
+
             sleep(0.6)
 n.edit " ```
              #{t0}                 #{t2}
@@ -192,10 +193,6 @@ DEALER   I     I######I      I     I #{d}    I       #{nick}
 ```"
             sleep(0.6)
 
-            if t2 > 21
-              if fuk > 0
-                t2 -= 10
-                fuk -= 1
 
 n.edit " ```
                 #{t0}                  #{t2}
@@ -209,41 +206,7 @@ n.edit " ```
 
 ```"
 
-              elsif fuk == 0
-n.edit  " ```
-                #{t0}                  #{t2}
-           --------            --------
-           I #{b}   --------      I #{u}   --------     #{nick}
-  DEALER   I     I######I      I     I #{d}   --------
-           I     I######I      I     I     I #{c1}    I
-           ------I######I      ------I     I      I
-                 --------            ------I      I
-                                           --------
 
-```"
-              end
-            else
-
-n.edit " ```
-              #{t0}                  #{t2}
-         --------            --------
-         I #{b}   --------      I #{u}   --------     #{nick}
-DEALER   I     I######I      I     I #{d}   --------
-         I     I######I      I     I     I #{c1}    I
-         ------I######I      ------I     I      I
-               --------            ------I      I
-                                         --------
-Kart çekmek için *bcard
-Kalmak için *bdone
-```"
-
-            end
-
-            bjackcur = JSON.parse(File.read('data/bjackcur.json'))
-            players = bjackcur['currentplayers']
-            players[idb] = players[idb].merge(Hash['fuk', fuk, 'dfuk', dfuk, 'k', k, 'kartlar', kartlar, 't1', t1, 't2', t2, 't0', t0, 'c1', c1])
-            File.write('data/bjackcur.json', bjackcur.to_json)
-            nil
           elsif k == 2
 
             c2 = kartlar.sample
@@ -260,11 +223,28 @@ Kalmak için *bdone
 
             t2 += c2t
 
+            if t2 > 21
+              if fuk > 0
+                t2 -= 10
+                fuk -= 1
+              elsif fuk == 0
+                #gg
+              end
+              else
+                #21 geçmedi devam aslan
+              end
+
+              bjackcur = JSON.parse(File.read('data/bjackcur.json'))
+              players = bjackcur['currentplayers']
+              players[idb] = players[idb].merge(Hash['fuk', fuk, 'dfuk', dfuk, 'k', k, 'kartlar', kartlar, 't1', t1, 't2', t2, 't0', t0, 'c2', c2])
+              File.write('data/bjackcur.json', bjackcur.to_json)
+              nil
+
 o = event.send " ```
               #{t0}                  #{t2}
          --------            --------
          I #{b}   --------      I #{u}   --------
-DEALER   I     I######I      I     I #{d}   --------     #{nick}
+DEALER   I     I######I      I     I #{d}   --------            #{nick}
          I     I######I      I     I     I #{c1}    I
          ------I######I      ------I     I      I    --------
                --------            ------I      I    I #{c2}    I
@@ -277,7 +257,7 @@ o.edit " ```
               #{t0}                  #{t2}
          --------            --------
          I #{b}   --------      I #{u}   --------
-DEALER   I     I######I      I     I #{d}   --------     #{nick}
+DEALER   I     I######I      I     I #{d}   --------            #{nick}
          I     I######I      I     I     I #{c1}    I
          ------I######I      ------I     I      I --------
                --------            ------I      I I #{c2}    I
@@ -288,16 +268,11 @@ DEALER   I     I######I      I     I #{d}   --------     #{nick}
 ```"
             sleep(0.5)
 
-            if t2 > 21
-              if fuk > 0
-                t2 -= 10
-                fuk -= 1
-
 o.edit " ```
               #{t0}                  #{t2}
          --------            --------
          I #{b}   --------      I #{u}   --------
-DEALER   I     I######I      I     I #{d}   --------     #{nick}
+DEALER   I     I######I      I     I #{d}   --------             #{nick}
          I     I######I      I     I     I #{c1}   --------
          ------I######I      ------I     I     I #{c2}    I
                --------            ------I     I      I
@@ -305,41 +280,6 @@ DEALER   I     I######I      I     I #{d}   --------     #{nick}
                                                --------
 ```"
 
-              elsif fuk == 0
-
-o.edit " ```
-              #{t0}                  #{t2}
-         --------            --------
-         I #{b}   --------      I #{u}   --------
-DEALER   I     I######I      I     I #{d}   --------     #{nick}
-         I     I######I      I     I     I #{c1}   --------
-         ------I######I      ------I     I     I #{c2}    I
-               --------            ------I     I      I
-                                         ------I      I
-                                               --------
-```"
-              end
-            else
-
-  o.edit " ```
-                #{t0}                  #{t2}
-           --------            --------
-           I #{b}   --------      I #{u}   --------
-  DEALER   I     I######I      I     I #{d}   --------     #{nick}
-           I     I######I      I     I     I #{c1}   --------
-           ------I######I      ------I     I     I #{c2}    I
-                 --------            ------I     I      I
-                                           ------I      I
-                                                 --------
-Kart çekmek için *bcard
-Kalmak için *```"
-
-            end
-            bjackcur = JSON.parse(File.read('data/bjackcur.json'))
-            players = bjackcur['currentplayers']
-            players[idb] = players[idb].merge(Hash['fuk', fuk, 'dfuk', dfuk, 'k', k, 'kartlar', kartlar, 't1', t1, 't2', t2, 't0', t0, 'c2', c2])
-            File.write('data/bjackcur.json', bjackcur.to_json)
-            nil
           elsif k == 3
 
             c3 = kartlar.sample
@@ -354,6 +294,23 @@ Kalmak için *```"
               c3t = c3.to_i
             end
             t2 += c3t
+
+            if t2 > 21
+              if fuk > 0
+                t2 -= 10
+                fuk -= 1
+              elsif fuk == 0
+                #gg
+              end
+              else
+                #21 geçmedi devam aslan
+              end
+
+              bjackcur = JSON.parse(File.read('data/bjackcur.json'))
+              players = bjackcur['currentplayers']
+              players[idb] = players[idb].merge(Hash['fuk', fuk, 'dfuk', dfuk, 'k', k, 'kartlar', kartlar, 't1', t1, 't2', t2, 't0', t0, 'c3', c3])
+              File.write('data/bjackcur.json', bjackcur.to_json)
+              nil
 
 k = event.send " ```
               #{t0}                  #{t2}
@@ -386,10 +343,7 @@ DEALER   I     I######I      I     I #{d}   --------     #{nick}
 ```"
             sleep(0.5)
 
-            if t2 > 21
-              if fuk > 0
-                t2 -= 10
-                fuk -= 1
+
 
 k.edit " ```
               #{t0}                  #{t2}
@@ -403,49 +357,11 @@ DEALER   I     I######I      I     I #{d}   --------     #{nick}
                                                ------I      I
                                                      --------
 ```"
-
-              elsif fuk == 0
-
-k.edit " ```
-              #{t0}                  #{t2}
-         --------            --------
-         I #{b}   --------      I #{u}   --------
-DEALER   I     I######I      I     I #{d}   --------     #{nick}
-         I     I######I      I     I     I #{c1}   --------
-         ------I######I      ------I     I     I #{c2}   --------
-               --------            ------I     I     I #{c3}    I
-                                         ------I     I      I
-                                               ------I      I
-                                                     --------
-```"
-              end
-            else
-
-  k.edit " ```
-                #{t0}                  #{t2}
-           --------            --------
-           I #{b}   --------      I #{u}   --------
-  DEALER   I     I######I      I     I #{d}   --------     #{nick}
-           I     I######I      I     I     I #{c1}   --------
-           ------I######I      ------I     I     I #{c2}   --------
-                 --------            ------I     I     I #{c3}    I
-                                           ------I     I      I
-                                                 ------I      I
-                                                       --------
-Kart çekmek için *bcard
-Kalmak için *bdone
- ```"
-
-            end
 
           else
             event.send "#{nick} Başka kart çekemezsiniz."
          end
-         bjackcur = JSON.parse(File.read('data/bjackcur.json'))
-         players = bjackcur['currentplayers']
-         players[idb] = players[idb].merge(Hash['fuk', fuk, 'dfuk', dfuk, 'k', k, 'kartlar', kartlar, 't1', t1, 't2', t2, 't0', t0, 'c3', c3])
-         File.write('data/bjackcur.json', bjackcur.to_json)
-         nil
+
         end
       end
     end
