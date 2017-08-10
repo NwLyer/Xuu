@@ -7,7 +7,7 @@ module Bot
         paralarace = JSON.parse(dosya)
         if args[1] == nil
           event.send "Bet miktarını giriniz.(*race at bet)"
-        elsif 0 < args[1].to_i && args[1].to_i < 1000
+        elsif 0 <= args[1].to_i && args[1].to_i < 1000
           event.send "En düşük bet miktarı 1000"
         else
     if args[0].to_i == 1 || args[0].to_i == 2 || args[0].to_i == 3 || args[0].to_i == 4 || args[0].to_i == 5

@@ -12,7 +12,7 @@ module Bot
 
         if args.nil?
           event.send 'Bet miktarını giriniz.(*bjack bet)'
-        elsif args.to_i > 0 && args.to_i < 1000
+        elsif args.to_i >= 0 && args.to_i < 1000
           event.send 'En düşük bet miktarı 1000'
         else
           # v3 play2gather
@@ -398,6 +398,7 @@ DEALER   I     I######I      I     I #{d}   --------     #{nick}
           loop do
             break if t3 > t2
             break if t2 > 21
+	    break if t3 == t2 && t3 > 16
             if t2 > 21
             else
               if t3 > t2
@@ -479,7 +480,7 @@ end
 
             if k == 0
   q = event.send " ```
-                   #{t3}                   #{t2}
+                   #{t3}          	         #{t2}
 #{$sira1}--------
 #{$sira2}I #{u}   --------
 #{$sira3}I     I #{d}    I   #{nick}
@@ -493,7 +494,7 @@ end
 
             elsif k == 1
   q = event.send " ```
-                        #{t3}                       #{t2}
+                        #{t3}               		        #{t2}
 #{$sira1}--------
 #{$sira2}I #{u}   --------
 #{$sira3}I     I #{d}   --------     #{nick}
@@ -507,7 +508,7 @@ end
 
             elsif k == 2
   q = event.send " ```
-                      #{t3}                                  #{t2}
+                      #{t3}                      			            #{t2}
 #{$sira1}--------
 #{$sira2}I #{u}   --------
 #{$sira3}I     I #{d}   --------     #{nick}
@@ -521,7 +522,7 @@ end
 
             elsif k == 3
   q = event.send " ```
-                      #{t3}                                     #{t2}
+                      #{t3}                        				             #{t2}
 #{$sira1}--------
 #{$sira2}I #{u}   --------
 #{$sira3}I     I #{d}   --------     #{nick}
@@ -535,13 +536,26 @@ end
 
             end
 
-            if t2 > t3 && t2 < 21 || t3 > 21
+            if t2 > t3 && t2 < 22 || t3 > 21
               dosyab = File.read('data/para.json')
               paralarb = JSON.parse(dosyab)
               paralarb[idb.to_s] += (bet.to_i * 2)
               File.write('data/para.json', paralarb.to_json)
 
               w = event.send "Tebrikler kazandınız.Paranız: #{paralarb[idb.to_s]}"
+
+              bjackcur = JSON.parse(File.read('data/bjackcur.json'))
+              players = bjackcur['currentplayers']
+              players.delete(idb.to_s)
+              File.write('data/bjackcur.json', bjackcur.to_json)
+              nil
+	elsif t2 == t3 && t2 < 22 && t3 < 22
+              dosyab = File.read('data/para.json')
+              paralarb = JSON.parse(dosyab)
+              paralarb[idb.to_s] += (bet.to_i)
+              File.write('data/para.json', paralarb.to_json)
+
+              w = event.send "Berabere.Paranız: #{paralarb[idb.to_s]}"
 
               bjackcur = JSON.parse(File.read('data/bjackcur.json'))
               players = bjackcur['currentplayers']

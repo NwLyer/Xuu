@@ -7,7 +7,7 @@ module Bot
         paralarulet = JSON.parse(dosya)
         if args[1] == nil
           event.send "Bet miktarını giriniz.(*rulet red 10)"
-        elsif 0 < args[1].to_i && args[1].to_i < 1000
+        elsif 0 <= args[1].to_i && args[1].to_i < 1000
           event.send "En düşük bet miktarı 1000"
         else
     if args[0] == "red" || args[0] == "black" || args[0] == "ruby"
