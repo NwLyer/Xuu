@@ -2,7 +2,8 @@ module Bot
   module DiscordCommands
  module Give
       extend Discordrb::Commands::CommandContainer
-      command(:give) do |event, *args|
+bucket :moneybucket, limit: nil , time_span: nil , delay: 15
+      command :give, bucket: :moneybucket, rate_limit_message: '%time% saniye daha bekleyiniz.' do |event, *args|
           kisi = event.message.mentions[0]
 	if "<@#{event.message.mentions[0].id}>" == args[1]
 	event.send "Doğru kullanım (*give @nick para)"
@@ -39,7 +40,8 @@ end
 end
     module Money
       extend Discordrb::Commands::CommandContainer
-      command(:money) do |event|
+bucket :moneybucket, limit: nil , time_span: nil , delay: 15
+      command :money, bucket: :moneybucket, rate_limit_message: '%time% saniye daha bekleyiniz.' do |event|
         nick = event.user.username
         id = event.user.id
         dosya = File.read('data/para.json')

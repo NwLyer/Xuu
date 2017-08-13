@@ -2,7 +2,8 @@ module Bot
   module DiscordCommands
     module Rulet
       extend Discordrb::Commands::CommandContainer
-      command(:rulet) do |event, *args|
+	bucket :ruletbucket, limit: nil , time_span: nil , delay: 5
+      command :rulet, bucket: :ruletbucket, rate_limit_message: 'Oynamak için %time% saniye daha bekleyiniz.' do |event, *args|
         dosya = File.read('data/para.json')
         paralarulet = JSON.parse(dosya)
         if args[1] == nil

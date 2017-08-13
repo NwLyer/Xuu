@@ -2,7 +2,8 @@ module Bot
   module DiscordCommands
     module Race
       extend Discordrb::Commands::CommandContainer
-      command(:race) do |event, *args|
+bucket :racebucket, limit: nil , time_span: nil , delay: 5
+      command :race, bucket: :racebucket, rate_limit_message: 'Oynamak için %time% saniye daha bekleyiniz.' do |event, *args|
         dosya = File.read('data/para.json')
         paralarace = JSON.parse(dosya)
         if args[1] == nil
@@ -1679,12 +1680,12 @@ racemsg.edit "
                   nil
                 else
   racemsg.edit "
-  #{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
-  #{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
-  #{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:
-  #{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
-  #{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:	#{nickrace} kaybettiniz.Paranız: #{paralarace[idrace.to_s]}
-  "
+#{awin}:checkered_flag:#{a15}#{a14}#{a13}#{a12}#{a11}#{a10}#{a9}#{a8}#{a7}#{a6}#{a5}#{a4}#{a3}#{a2}#{a1}:checkered_flag:#{a0}:one:
+#{bwin}:checkered_flag:#{b15}#{b14}#{b13}#{b12}#{b11}#{b10}#{b9}#{b8}#{b7}#{b6}#{b5}#{b4}#{b3}#{b2}#{b1}:checkered_flag:#{b0}:two:
+#{cwin}:checkered_flag:#{c15}#{c14}#{c13}#{c12}#{c11}#{c10}#{c9}#{c8}#{c7}#{c6}#{c5}#{c4}#{c3}#{c2}#{c1}:checkered_flag:#{c0}:three:
+#{dwin}:checkered_flag:#{d15}#{d14}#{d13}#{d12}#{d11}#{d10}#{d9}#{d8}#{d7}#{d6}#{d5}#{d4}#{d3}#{d2}#{d1}:checkered_flag:#{d0}:four:
+#{ewin}:checkered_flag:#{e15}#{e14}#{e13}#{e12}#{e11}#{e10}#{e9}#{e8}#{e7}#{e6}#{e5}#{e4}#{e3}#{e2}#{e1}:checkered_flag:#{e0}:five:	#{nickrace} kaybettiniz.Paranız: #{paralarace[idrace.to_s]}
+"
                   nil
                   end
             end

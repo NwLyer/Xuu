@@ -2,8 +2,8 @@ module Bot
   module DiscordCommands
     module Invite
       extend Discordrb::Commands::CommandContainer
-      command :invite do |event|
-        break unless event.user.id == CONFIG.owner
+bucket :invitebucket, limit: nil , time_span: nil , delay: 30
+      command :invite, bucket: :invitebucket, rate_limit_message: '%time% saniye daha bekleyiniz.' do |event|
          event.bot.invite_url
       end
     end

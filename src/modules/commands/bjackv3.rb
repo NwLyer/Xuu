@@ -3,7 +3,8 @@ module Bot
   module DiscordCommands
     module Bjack
       extend Discordrb::Commands::CommandContainer
-      command :bjack do |event, args|
+	bucket :bj, limit: nil , time_span: nil , delay: 5
+      command :bjack, bucket: :bj, rate_limit_message: 'Oynamak için %time% saniye daha bekleyiniz.' do |event, args|
         bjackcur = JSON.parse(File.read('data/bjackcur.json'))
         players = bjackcur['currentplayers']
         players = players.delete_if {|key, value|  Time.now > Time.parse(value['timeout']) }
@@ -85,13 +86,13 @@ module Bot
 
 
       m = event.send " ```
-                #{t0}                #{t2}
-          --------            --------
-          I #{b}   --------      I #{u}   --------
- DEALER   I     I######I      I     I #{d}    I    #{nick}
-          I     I######I      I     I      I
-          ------I######I      ------I      I
-                --------            --------
+Dealer(#{t0})   #{nick[0..10]}(#{t2})
+--------         --------
+I #{b} --------     I #{u} --------
+I   I######I     I   I #{d}    I
+I   I######I     I   I      I
+----I######I     ----I      I
+    --------         --------
  Kart çekmek için *bcard
  Kalmak için *bdone
 ```"
@@ -108,7 +109,8 @@ module Bot
 end
     module Bcard
       extend Discordrb::Commands::CommandContainer
-      command :bcard do |event|
+bucket :bj, limit: nil , time_span: nil , delay: 5
+      command :bcard, bucket: :bj, rate_limit_message: 'Oynamak için %time% saniye daha bekleyiniz.' do |event|
         players = JSON.parse(File.read('data/bjackcur.json'))['currentplayers']
         if !players.key?(event.user.id.to_s)
           event.send 'Aktif oyununuz bulunmamaktadır. Yeni oyun başlatmak için (*bjack bet)'
@@ -167,43 +169,42 @@ end
               nil
 
   n = event.send " ```
-               #{t0}                  #{t2}
-          --------            --------
-          I #{b}   --------      I #{u}   --------~
- DEALER   I     I######I      I     I #{d}    I   #{nick}
-          I     I######I      I     I      I    --------
-          ------I######I      ------I      I    I #{c1}    I
-                --------            --------    I      I
-                                                I      I
-                                                --------
+DEALER(#{t0})      #{nick[0..10]}(#{t2})
+--------            --------
+I #{b} --------      I #{u} --------
+I   I######I      I   I #{d}    I
+I   I######I      I   I      I  --------
+----I######I      ----I      I  I #{c1}    I
+    --------          --------  I      I
+                                I      I
+                                --------
  ```"
 
 
             sleep(0.6)
 n.edit " ```
-             #{t0}                 #{t2}
-         --------            --------
-         I #{b}   --------      I #{u}   --------
-DEALER   I     I######I      I     I #{d}    I       #{nick}
-         I     I######I      I     I      I --------
-         ------I######I      ------I      I I #{c1}    I
-               --------            -------- I      I
-                                            I      I
-                                            --------
+Dealer(#{t0})    #{nick[0..10]}(#{t2})
+--------          --------
+I #{b} --------      I #{u} --------
+I   I######I      I   I #{d}    I
+I   I######I      I   I      --------
+----I######I      ----I      I #{c1}    I
+    --------          -------I      I
+                             I      I
+                             --------
 ```"
             sleep(0.6)
 
 
 n.edit " ```
-                #{t0}                  #{t2}
-           --------            --------
-           I #{b}   --------      I #{u}   --------     #{nick}
-  DEALER   I     I######I      I     I #{d}   --------
-           I     I######I      I     I     I #{c1}    I
-           ------I######I      ------I     I      I
-                 --------            ------I      I
-                                           --------
-
+Dealer(#{t0})    #{nick[0..10]}(#{t2})
+--------          --------
+I #{b} --------      I #{u} --------
+I   I######I      I   I #{d} --------
+I   I######I      I   I   I #{c1}    I
+----I######I      ----I   I      I
+    --------          ----I      I
+                          --------
 ```"
 
 
@@ -241,43 +242,42 @@ n.edit " ```
               nil
 
 o = event.send " ```
-              #{t0}                  #{t2}
-         --------            --------
-         I #{b}   --------      I #{u}   --------
-DEALER   I     I######I      I     I #{d}   --------            #{nick}
-         I     I######I      I     I     I #{c1}    I
-         ------I######I      ------I     I      I    --------
-               --------            ------I      I    I #{c2}    I
-                                         --------    I      I
-                                                     I      I
-                                                     --------
+Dealer(#{t0})    #{nick[0..10]}(#{t2})
+--------          --------
+I #{b} --------      I #{u} --------
+I   I######I      I   I #{d} --------
+I   I######I      I   I   I #{c1}    I
+----I######I      ----I   I      I  --------
+    --------          ----I      I  I #{c2}    I
+                          --------  I      I
+                                    I      I
+                                    --------
 ```"
             sleep(0.5)
 o.edit " ```
-              #{t0}                  #{t2}
-         --------            --------
-         I #{b}   --------      I #{u}   --------
-DEALER   I     I######I      I     I #{d}   --------            #{nick}
-         I     I######I      I     I     I #{c1}    I
-         ------I######I      ------I     I      I --------
-               --------            ------I      I I #{c2}    I
-                                         -------- I      I
-                                                  I      I
-                                                  --------
-
+Dealer(#{t0})    #{nick[0..10]}(#{t2})
+--------          --------
+I #{b} --------      I #{u} --------
+I   I######I      I   I #{d} --------
+I   I######I      I   I   I #{c1}    I
+----I######I      ----I   I      --------
+    --------          ----I      I #{c2}    I
+                          -------I      I
+                                 I      I
+                                 --------
 ```"
             sleep(0.5)
 
 o.edit " ```
-              #{t0}                  #{t2}
-         --------            --------
-         I #{b}   --------      I #{u}   --------
-DEALER   I     I######I      I     I #{d}   --------             #{nick}
-         I     I######I      I     I     I #{c1}   --------
-         ------I######I      ------I     I     I #{c2}    I
-               --------            ------I     I      I
-                                         ------I      I
-                                               --------
+Dealer(#{t0})    #{nick[0..10]}(#{t2})
+--------          --------
+I #{b} --------      I #{u} --------
+I   I######I      I   I #{d} --------
+I   I######I      I   I   I #{c1} --------
+----I######I      ----I   I   I #{c2}    I
+    --------          ----I   I      I
+                          ----I      I
+                              --------
 ```"
 
           elsif k == 3
@@ -313,53 +313,52 @@ DEALER   I     I######I      I     I #{d}   --------             #{nick}
               nil
 
 k = event.send " ```
-              #{t0}                  #{t2}
-         --------            --------
-         I #{b}   --------      I #{u}   --------
-DEALER   I     I######I      I     I #{d}   --------     #{nick}
-         I     I######I      I     I     I #{c1}   --------
-         ------I######I      ------I     I     I #{c2}    I
-               --------            ------I     I      I    --------
-                                         ------I      I    I #{c3}    I
-                                               --------    I      I
-                                                           I      I
-                                                           --------
-
+Dealer(#{t0})    #{nick[0..10]}(#{t2})
+--------          --------
+I #{b} --------      I #{u} --------
+I   I######I      I   I #{d} --------
+I   I######I      I   I   I #{c1} --------
+----I######I      ----I   I   I #{c2}    I
+    --------          ----I   I      I  --------
+                          ----I      I  I #{c3}    I
+                              --------  I      I
+                                        I      I
+                                        --------
 ```"
 
             sleep(0.5)
 k.edit " ```
-              #{t0}                  #{t2}
-         --------            --------
-         I #{b}   --------      I #{u}   --------
-DEALER   I     I######I      I     I #{d}   --------     #{nick}
-         I     I######I      I     I     I #{c1}   --------
-         ------I######I      ------I     I     I #{c2}    I
-               --------            ------I     I      I --------
-                                         ------I      I I #{c3}    I
-                                               -------- I      I
-                                                        I      I
-                                                        --------
+Dealer(#{t0})    #{nick[0..10]}(#{t2})
+--------          --------
+I #{b} --------      I #{u} --------
+I   I######I      I   I #{d} --------
+I   I######I      I   I   I #{c1} --------
+----I######I      ----I   I   I #{c2}    I
+    --------          ----I   I      --------
+                          ----I      I #{c3}    I
+                              -------I      I
+                                     I      I
+                                     --------
 ```"
             sleep(0.5)
 
 
 
 k.edit " ```
-              #{t0}                  #{t2}
-         --------            --------
-         I #{b}   --------      I #{u}   --------
-DEALER   I     I######I      I     I #{d}   --------     #{nick}
-         I     I######I      I     I     I #{c1}   --------
-         ------I######I      ------I     I     I #{c2}   --------
-               --------            ------I     I     I #{c3}    I
-                                         ------I     I      I
-                                               ------I      I
-                                                     --------
+Dealer(#{t0})    #{nick[0..10]}(#{t2})
+--------          --------
+I #{b} --------      I #{u} --------
+I   I######I      I   I #{d} --------
+I   I######I      I   I   I #{c1} --------
+----I######I      ----I   I   I #{c2} --------
+    --------          ----I   I   I #{c3}    I
+                          ----I   I      I
+                              ----I      I
+                                  --------
 ```"
 
           else
-            event.send "#{nick} Başka kart çekemezsiniz."
+            event.send "#{nick} başka kart çekemezsiniz."
          end
 
         end
@@ -367,7 +366,8 @@ DEALER   I     I######I      I     I #{d}   --------     #{nick}
     end
     module Bdone
       extend Discordrb::Commands::CommandContainer
-      command :bdone do |event|
+	bucket :bj, limit: nil , time_span: nil , delay: 5
+      command :bdone, bucket: :bj, rate_limit_message: 'Oynamak için %time% saniye daha bekleyiniz.' do |event|
         players = JSON.parse(File.read('data/bjackcur.json'))['currentplayers']
         if !players.key?(event.user.id.to_s)
           event.send 'Aktif oyununuz bulunmamaktadır. Yeni oyun başlatmak için (*bjack bet)'
@@ -434,104 +434,108 @@ DEALER   I     I######I      I     I #{d}   --------     #{nick}
 end
             case cekmesayisi
             when 0
-              $sira1 = '             --------             '
-              $sira2 = "             I #{b}   --------       "
-              $sira3 = "    DEALER   I     I #{i}    I       "
-              $sira4 = '             I     I      I       '
-              $sira5 = '             ------I      I       '
-              $sira6 = '                   --------       '
-              $sira7 = '                                  '
-              $sira8 = '                                  '
-              $sira9 = '                                  '
+              sira0 = "DEALER(#{t3})    "
+              sira1 = '--------         '
+              sira2 = "I #{b} --------     "
+              sira3 = "I   I #{i}    I     "
+              sira4 = 'I   I      I     '
+              sira5 = '----I      I     '
+              sira6 = '    --------     '
+              sira7 = '                 '
+              sira8 = '                 '
+              sira9 = '                 '
             when 1
-              $sira1 = '             --------                   '
-              $sira2 = "             I #{b}   --------             "
-              $sira3 = "    DEALER   I     I #{i}   --------       "
-              $sira4 = "             I     I     I #{kartlarc[0]}    I       "
-              $sira5 = '             ------I     I      I       '
-              $sira6 = '                   ------I      I       '
-              $sira7 = '                         --------       '
-              $sira8 = '                                        '
-              $sira9 = '                                        '
+              sira0 = "DEALER(#{t3})        "
+              sira1 = '--------             '
+              sira2 = "I #{b} --------         "
+              sira3 = "I   I #{i} --------     "
+              sira4 = "I   I   I #{kartlarc[0]}    I     "
+              sira5 = '----I   I      I     '
+              sira6 = '    ----I      I     '
+              sira7 = '        --------     '
+              sira8 = '                     '
+              sira9 = '                     '
 
             when 2
-              $sira1 = '             --------                                '
-              $sira2 = "             I #{b}   --------                          "
-              $sira3 = "    DEALER   I     I #{i}   --------                    "
-              $sira4 = "             I     I     I #{kartlarc[0]}   --------              "
-              $sira5 = "             ------I     I     I #{kartlarc[1]}    I              "
-              $sira6 = '                   ------I     I      I              '
-              $sira7 = '                         ------I      I              '
-              $sira8 = '                               --------              '
-              $sira9 = '                                                     '
+              sira0 = "DEALER(#{t3})              "
+              sira1 = '--------                   '
+              sira2 = "I #{b} --------               "
+              sira3 = "I   I #{i} --------           "
+              sira4 = "I   I   I #{kartlarc[0]} --------       "
+              sira5 = "----I   I   I #{kartlarc[1]}    I       "
+              sira6 = '    ----I   I      I       '
+              sira7 = '        ----I      I       '
+              sira8 = '            --------       '
+              sira9 = '                           '
 
             when 3
-              $sira1 = '             --------                                '
-              $sira2 = "             I #{b}   --------                          "
-              $sira3 = "    DEALER   I     I #{i}   --------                    "
-              $sira4 = "             I     I     I #{kartlarc[0]}   --------              "
-              $sira5 = "             ------I     I     I #{kartlarc[1]}   --------        "
-              $sira6 = "                   ------I     I     I #{kartlarc[2]}    I        "
-              $sira7 = '                         ------I     I      I        '
-              $sira8 = '                               ------I      I         '
-              $sira9 = '                                     --------                '
+              sira0 = "DEALER(#{t3})                "
+              sira1 = '--------                   '
+              sira2 = "I #{b} --------               "
+              sira3 = "I   I #{i} --------           "
+              sira4 = "I   I   I #{kartlarc[0]} --------       "
+              sira5 = "----I   I   I #{kartlarc[1]} --------   "
+              sira6 = "    ----I   I   I #{kartlarc[2]}    I   "
+              sira7 = '        ----I   I      I     '
+              sira8 = '            ----I      I     '
+              sira9 = '                --------     '
 
             end
 
             if k == 0
   q = event.send " ```
-                   #{t3}          	         #{t2}
-#{$sira1}--------
-#{$sira2}I #{u}   --------
-#{$sira3}I     I #{d}    I   #{nick}
-#{$sira4}I     I      I
-#{$sira5}------I      I
-#{$sira6}      --------
-#{$sira7}
-#{$sira8}
-#{$sira9}
+#{sira0}#{nick[0..10]}(#{t2})
+#{sira1}--------
+#{sira2}I #{u} --------
+#{sira3}I   I #{d}    I
+#{sira4}I   I      I
+#{sira5}----I      I
+#{sira6}    --------
+#{sira7}
+#{sira8}
+#{sira9}
 ```"
 
             elsif k == 1
   q = event.send " ```
-                        #{t3}               		        #{t2}
-#{$sira1}--------
-#{$sira2}I #{u}   --------
-#{$sira3}I     I #{d}   --------     #{nick}
-#{$sira4}I     I     I #{c1}    I
-#{$sira5}------I     I      I
-#{$sira6}      ------I      I
-#{$sira7}            --------
-#{$sira8}
-#{$sira9}
+#{sira0}#{nick[0..10]}(#{t2})
+#{sira1}--------
+#{sira2}I #{u} --------
+#{sira3}I   I #{d} --------
+#{sira4}I   I   I #{c1}    I
+#{sira5}----I   I      I
+#{sira6}    ----I      I
+#{sira7}        --------
+#{sira8}
+#{sira9}
   ```"
 
             elsif k == 2
   q = event.send " ```
-                      #{t3}                      			            #{t2}
-#{$sira1}--------
-#{$sira2}I #{u}   --------
-#{$sira3}I     I #{d}   --------     #{nick}
-#{$sira4}I     I     I #{c1}   --------
-#{$sira5}------I     I     I #{c2}    I
-#{$sira6}      ------I     I      I
-#{$sira7}            ------I      I
-#{$sira8}                  --------
-#{$sira9}
+#{sira0}#{nick[0..10]}(#{t2})
+#{sira1}--------
+#{sira2}I #{u} --------
+#{sira3}I   I #{d} --------
+#{sira4}I   I   I #{c1} --------
+#{sira5}----I   I   I #{c2}    I
+#{sira6}    ----I   I      I
+#{sira7}        ----I      I
+#{sira8}            --------
+#{sira9}
   ```"
 
             elsif k == 3
   q = event.send " ```
-                      #{t3}                        				             #{t2}
-#{$sira1}--------
-#{$sira2}I #{u}   --------
-#{$sira3}I     I #{d}   --------     #{nick}
-#{$sira4}I     I     I #{c1}   --------
-#{$sira5}------I     I     I #{c2}   --------
-#{$sira6}      ------I     I     I #{c3}    I
-#{$sira7}            ------I     I      I
-#{$sira8}                  ------I      I
-#{$sira9}                        --------
+#{sira0}#{nick[0..10]}(#{t2})
+#{sira1}--------
+#{sira2}I #{u} --------
+#{sira3}I   I #{d} --------
+#{sira4}I   I   I #{c1} --------
+#{sira5}----I   I   I #{c2} --------
+#{sira6}    ----I   I   I #{c3}    I
+#{sira7}        ----I   I      I
+#{sira8}            ----I      I
+#{sira9}                --------
   ```"
 
             end
