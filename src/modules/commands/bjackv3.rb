@@ -3,36 +3,34 @@ module Bot
   module DiscordCommands
     module Bjack
       extend Discordrb::Commands::CommandContainer
-	bucket :bj, limit: nil , time_span: nil , delay: 5
-      command :bjack, bucket: :bj, rate_limit_message: 'Oynamak için %time% saniye daha bekleyiniz.' do |event, args|
-        bjackcur = JSON.parse(File.read('data/bjackcur.json'))
-        players = bjackcur['currentplayers']
-        players = players.delete_if {|key, value|  Time.now > Time.parse(value['timeout']) }
-        File.write('data/bjackcur.json', bjackcur.to_json)
-        nil
+      $bjbucket = bucket :bj, delay: 5
+      command :bjack do |event, args|
+        bucketresponse = $bjbucket.rate_limited?(event.user)
+         if bucketresponse
+          event.send_temporary_message "**------------------------------**\n#{event.user.username} oynamak için #{bucketresponse.round(2)} saniye bekleyiniz.", 10.0
+        else
+
+        $players = $players.delete_if {|key, value|  Time.now > value['timeout'] }
 
         if args.nil?
-          event.send 'Bet miktarını giriniz.(*bjack bet)'
+          event.send_temporary_message "**------------------------------**\n#{event.user.username} bet miktarını giriniz.(*bjack bet)", 10.0
         elsif args.to_i >= 0 && args.to_i < 1000
-          event.send 'En düşük bet miktarı 1000'
+          event.send_temporary_message "**------------------------------**\n#{event.user.username} en düşük bet miktarı 1000", 10.0
         else
-          # v3 play2gather
+          # v3 play2gather v4 update..
           nick = event.user.username
           idb = event.user.id
           bet = args
-          $dosyab = File.read('data/para.json')
-          $paralarb = JSON.parse($dosyab)
+          user = User.find_by(user_id: idb)
+          user = User.create(user_id: idb) if user.nil?
 
-          if args.to_i > $paralarb[idb.to_s].to_i
-            event.send 'Yeterli paranız yok.'
+          if args.to_i > user.money
+            event.send_temporary_message "**------------------------------**\n#{event.user.username} yeterli paranız bulunmamaktadır. Paranız: #{user.money}", 10.0
           else
-            if $paralarb[idb.to_s].nil?
-              $paralarb[idb.to_s] = (100000 - args.to_i)
-              File.write('data/para.json', $paralarb.to_json)
-            else
-              $paralarb[idb.to_s] -= args.to_i
-              File.write('data/para.json', $paralarb.to_json)
-            end
+
+            user.money -= args.to_i
+            user.save
+            event.send "**------------------------------**"
             fuk = 0
             dfuk = 0
             k = 0
@@ -84,6 +82,16 @@ module Bot
             t2 = ut + dt
             t0 = bt
 
+            if t2 > 21
+              if fuk > 0
+                t2 -= 10
+                fuk -= 1
+              elsif fuk == 0
+                #gg
+              end
+              else
+                #21 geçmedi devam aslan
+              end
 
       m = event.send " ```
 Dealer(#{t0})   #{nick[0..10]}(#{t2})
@@ -96,42 +104,46 @@ I   I######I     I   I      I
  Kart çekmek için *bcard
  Kalmak için *bdone
 ```"
-            # bjack v3
-            bjackcur = JSON.parse(File.read('data/bjackcur.json'))
-            players = bjackcur['currentplayers']
-            players[idb.to_s] = Hash['nick', nick, 'idb', idb, 'bet', bet, 'fuk', fuk, 'dfuk', dfuk, 'k', k, 'kartlar', kartlar, 'b', b, 'i', i, 'u', u, 'd', d, 't1', t1, 't2', t2, 't0', t0, 'timeout', timeout]
-            File.write('data/bjackcur.json', bjackcur.to_json)
+            # bjack v3 - v4
+            $players[idb.to_s] = Hash['message', m, 'nick', nick, 'idb', idb, 'bet', bet, 'fuk', fuk, 'dfuk', dfuk, 'k', k, 'kartlar', kartlar, 'b', b, 'i', i, 'u', u, 'd', d, 't1', t1, 't2', t2, 't0', t0, 'timeout', timeout]
             nil
           end
-
+        end
       end
+        event.message.delete
       end
 end
     module Bcard
       extend Discordrb::Commands::CommandContainer
-bucket :bj, limit: nil , time_span: nil , delay: 5
-      command :bcard, bucket: :bj, rate_limit_message: 'Oynamak için %time% saniye daha bekleyiniz.' do |event|
-        players = JSON.parse(File.read('data/bjackcur.json'))['currentplayers']
-        if !players.key?(event.user.id.to_s)
-          event.send 'Aktif oyununuz bulunmamaktadır. Yeni oyun başlatmak için (*bjack bet)'
+      command :bcard do |event|
+        sleep(0.1)
+          event.message.delete
+        bucketresponse = $bjbucket.rate_limited?(event.user)
+         if bucketresponse
+          event.send_temporary_message "**------------------------------**\n#{event.user.username} oynamak için #{bucketresponse.round(2)} saniye bekleyiniz.", 10.0
+        else
+
+        if !$players.key?(event.user.id.to_s)
+          event.send_temporary_message "**------------------------------**\n#{event.user.username} aktif oyununuz bulunmamaktadır. Yeni oyun başlatmak için (*bjack bet)", 10.0
         else
           # bjackv3
           idb = event.user.id.to_s
-          nick = players[idb]['nick']
-          k = players[idb]['k']
-          b = players[idb]['b']
-          i = players[idb]['i']
-          u = players[idb]['u']
-          d = players[idb]['d']
-          kartlar = players[idb]['kartlar']
-          fuk = players[idb]['fuk']
-          dfuk = players[idb]['dfuk']
-          t0 = players[idb]['t0']
-          t1 = players[idb]['t1']
-          t2 = players[idb]['t2']
-          c1 = players[idb]['c1']
-          c2 = players[idb]['c2']
-          c3 = players[idb]['c3']
+          nick = $players[idb]['nick']
+          k = $players[idb]['k']
+          b = $players[idb]['b']
+          i = $players[idb]['i']
+          u = $players[idb]['u']
+          d = $players[idb]['d']
+          kartlar = $players[idb]['kartlar']
+          fuk = $players[idb]['fuk']
+          dfuk = $players[idb]['dfuk']
+          t0 = $players[idb]['t0']
+          t1 = $players[idb]['t1']
+          t2 = $players[idb]['t2']
+          c1 = $players[idb]['c1']
+          c2 = $players[idb]['c2']
+          c3 = $players[idb]['c3']
+          m = $players[idb]['message']
 
           k += 1
           if k == 1
@@ -161,14 +173,10 @@ bucket :bj, limit: nil , time_span: nil , delay: 5
               else
                 #21 geçmedi devam aslan
               end
-
-              bjackcur = JSON.parse(File.read('data/bjackcur.json'))
-              players = bjackcur['currentplayers']
-              players[idb] = players[idb].merge(Hash['fuk', fuk, 'dfuk', dfuk, 'k', k, 'kartlar', kartlar, 't1', t1, 't2', t2, 't0', t0, 'c1', c1])
-              File.write('data/bjackcur.json', bjackcur.to_json)
+              $players[idb] = $players[idb].merge(Hash['message', m, 'fuk', fuk, 'dfuk', dfuk, 'k', k, 'kartlar', kartlar, 't1', t1, 't2', t2, 't0', t0, 'c1', c1])
               nil
 
-  n = event.send " ```
+  m.edit " ```
 DEALER(#{t0})      #{nick[0..10]}(#{t2})
 --------            --------
 I #{b} --------      I #{u} --------
@@ -182,7 +190,7 @@ I   I######I      I   I      I  --------
 
 
             sleep(0.6)
-n.edit " ```
+m.edit " ```
 Dealer(#{t0})    #{nick[0..10]}(#{t2})
 --------          --------
 I #{b} --------      I #{u} --------
@@ -196,7 +204,7 @@ I   I######I      I   I      --------
             sleep(0.6)
 
 
-n.edit " ```
+m.edit " ```
 Dealer(#{t0})    #{nick[0..10]}(#{t2})
 --------          --------
 I #{b} --------      I #{u} --------
@@ -206,9 +214,7 @@ I   I######I      I   I   I #{c1}    I
     --------          ----I      I
                           --------
 ```"
-
-
-          elsif k == 2
+  elsif k == 2
 
             c2 = kartlar.sample
             kartlar.delete_at(kartlar.find_index(c2))
@@ -234,14 +240,10 @@ I   I######I      I   I   I #{c1}    I
               else
                 #21 geçmedi devam aslan
               end
-
-              bjackcur = JSON.parse(File.read('data/bjackcur.json'))
-              players = bjackcur['currentplayers']
-              players[idb] = players[idb].merge(Hash['fuk', fuk, 'dfuk', dfuk, 'k', k, 'kartlar', kartlar, 't1', t1, 't2', t2, 't0', t0, 'c2', c2])
-              File.write('data/bjackcur.json', bjackcur.to_json)
+              $players[idb] = $players[idb].merge(Hash['message', m, 'fuk', fuk, 'dfuk', dfuk, 'k', k, 'kartlar', kartlar, 't1', t1, 't2', t2, 't0', t0, 'c2', c2])
               nil
 
-o = event.send " ```
+m.edit " ```
 Dealer(#{t0})    #{nick[0..10]}(#{t2})
 --------          --------
 I #{b} --------      I #{u} --------
@@ -254,7 +256,7 @@ I   I######I      I   I   I #{c1}    I
                                     --------
 ```"
             sleep(0.5)
-o.edit " ```
+m.edit " ```
 Dealer(#{t0})    #{nick[0..10]}(#{t2})
 --------          --------
 I #{b} --------      I #{u} --------
@@ -268,7 +270,7 @@ I   I######I      I   I   I #{c1}    I
 ```"
             sleep(0.5)
 
-o.edit " ```
+m.edit " ```
 Dealer(#{t0})    #{nick[0..10]}(#{t2})
 --------          --------
 I #{b} --------      I #{u} --------
@@ -279,7 +281,6 @@ I   I######I      I   I   I #{c1} --------
                           ----I      I
                               --------
 ```"
-
           elsif k == 3
 
             c3 = kartlar.sample
@@ -305,14 +306,10 @@ I   I######I      I   I   I #{c1} --------
               else
                 #21 geçmedi devam aslan
               end
-
-              bjackcur = JSON.parse(File.read('data/bjackcur.json'))
-              players = bjackcur['currentplayers']
-              players[idb] = players[idb].merge(Hash['fuk', fuk, 'dfuk', dfuk, 'k', k, 'kartlar', kartlar, 't1', t1, 't2', t2, 't0', t0, 'c3', c3])
-              File.write('data/bjackcur.json', bjackcur.to_json)
+              $players[idb] = $players[idb].merge(Hash['fuk', fuk, 'dfuk', dfuk, 'k', k, 'kartlar', kartlar, 't1', t1, 't2', t2, 't0', t0, 'c3', c3])
               nil
 
-k = event.send " ```
+m.edit " ```
 Dealer(#{t0})    #{nick[0..10]}(#{t2})
 --------          --------
 I #{b} --------      I #{u} --------
@@ -327,7 +324,7 @@ I   I######I      I   I   I #{c1} --------
 ```"
 
             sleep(0.5)
-k.edit " ```
+m.edit " ```
 Dealer(#{t0})    #{nick[0..10]}(#{t2})
 --------          --------
 I #{b} --------      I #{u} --------
@@ -344,7 +341,7 @@ I   I######I      I   I   I #{c1} --------
 
 
 
-k.edit " ```
+m.edit " ```
 Dealer(#{t0})    #{nick[0..10]}(#{t2})
 --------          --------
 I #{b} --------      I #{u} --------
@@ -356,41 +353,45 @@ I   I######I      I   I   I #{c1} --------
                               ----I      I
                                   --------
 ```"
-
           else
-            event.send "#{nick} başka kart çekemezsiniz."
+            event.send_temporary_message "**------------------------------**\n#{nick} başka kart çekemezsiniz.", 20.0
          end
-
+       end
         end
       end
     end
     module Bdone
       extend Discordrb::Commands::CommandContainer
-	bucket :bj, limit: nil , time_span: nil , delay: 5
-      command :bdone, bucket: :bj, rate_limit_message: 'Oynamak için %time% saniye daha bekleyiniz.' do |event|
-        players = JSON.parse(File.read('data/bjackcur.json'))['currentplayers']
-        if !players.key?(event.user.id.to_s)
-          event.send 'Aktif oyununuz bulunmamaktadır. Yeni oyun başlatmak için (*bjack bet)'
+      command :bdone do |event|
+        sleep(0.1)
+          event.message.delete
+        bucketresponse = $bjbucket.rate_limited?(event.user)
+         if bucketresponse
+          event.send_temporary_message "**------------------------------**\n#{event.user.username} oynamak için #{bucketresponse.round(2)} saniye bekleyiniz.", 10.0
+        else
+
+        if !$players.key?(event.user.id.to_s)
+          event.send_temporary_message "**------------------------------**\n#{event.user.username} aktif oyununuz bulunmamaktadır. Yeni oyun başlatmak için (*bjack bet)", 10.0
         else
           # bjackv3
           idb = event.user.id.to_s
-          nick = players[idb]['nick']
-          k = players[idb]['k']
-          b = players[idb]['b']
-          i = players[idb]['i']
-          u = players[idb]['u']
-          d = players[idb]['d']
-          kartlar = players[idb]['kartlar']
-          fuk = players[idb]['fuk']
-          dfuk = players[idb]['dfuk']
-          t0 = players[idb]['t0']
-          t1 = players[idb]['t1']
-          t2 = players[idb]['t2']
-          c1 = players[idb]['c1']
-          c2 = players[idb]['c2']
-          c3 = players[idb]['c3']
-          bet = players[idb]['bet']
-          idb = players[idb]['idb']
+          nick = $players[idb]['nick']
+          k = $players[idb]['k']
+          b = $players[idb]['b']
+          i = $players[idb]['i']
+          u = $players[idb]['u']
+          d = $players[idb]['d']
+          kartlar = $players[idb]['kartlar']
+          fuk = $players[idb]['fuk']
+          dfuk = $players[idb]['dfuk']
+          t0 = $players[idb]['t0']
+          t1 = $players[idb]['t1']
+          t2 = $players[idb]['t2']
+          c1 = $players[idb]['c1']
+          c2 = $players[idb]['c2']
+          c3 = $players[idb]['c3']
+          bet = $players[idb]['bet']
+          m = $players[idb]['message']
 
           t3 = t1
           kartlarc = []
@@ -483,7 +484,7 @@ end
             end
 
             if k == 0
-  q = event.send " ```
+  q =  " ```
 #{sira0}#{nick[0..10]}(#{t2})
 #{sira1}--------
 #{sira2}I #{u} --------
@@ -493,11 +494,11 @@ end
 #{sira6}    --------
 #{sira7}
 #{sira8}
-#{sira9}
+#{sira9}\n
 ```"
 
             elsif k == 1
-  q = event.send " ```
+  q =  " ```
 #{sira0}#{nick[0..10]}(#{t2})
 #{sira1}--------
 #{sira2}I #{u} --------
@@ -507,11 +508,11 @@ end
 #{sira6}    ----I      I
 #{sira7}        --------
 #{sira8}
-#{sira9}
+#{sira9}\n
   ```"
 
             elsif k == 2
-  q = event.send " ```
+  q =  " ```
 #{sira0}#{nick[0..10]}(#{t2})
 #{sira1}--------
 #{sira2}I #{u} --------
@@ -521,11 +522,11 @@ end
 #{sira6}    ----I   I      I
 #{sira7}        ----I      I
 #{sira8}            --------
-#{sira9}
+#{sira9}\n
   ```"
 
             elsif k == 3
-  q = event.send " ```
+  q =  " ```
 #{sira0}#{nick[0..10]}(#{t2})
 #{sira1}--------
 #{sira2}I #{u} --------
@@ -535,52 +536,34 @@ end
 #{sira6}    ----I   I   I #{c3}    I
 #{sira7}        ----I   I      I
 #{sira8}            ----I      I
-#{sira9}                --------
+#{sira9}                --------\n
   ```"
 
             end
-
+            user = User.find_by(user_id: event.user.id)
             if t2 > t3 && t2 < 22 || t3 > 21
-              dosyab = File.read('data/para.json')
-              paralarb = JSON.parse(dosyab)
-              paralarb[idb.to_s] += (bet.to_i * 2)
-              File.write('data/para.json', paralarb.to_json)
+              user.money += (bet.to_i * 2)
+              user.save
 
-              w = event.send "Tebrikler kazandınız.Paranız: #{paralarb[idb.to_s]}"
+              q += "Tebrikler kazandınız.Paranız: #{user.money}"
+              m.edit q
+              $players.delete(idb)
+	          elsif t2 == t3 && t2 < 22 && t3 < 22
+              user.money += (bet.to_i)
+              user.save
 
-              bjackcur = JSON.parse(File.read('data/bjackcur.json'))
-              players = bjackcur['currentplayers']
-              players.delete(idb.to_s)
-              File.write('data/bjackcur.json', bjackcur.to_json)
-              nil
-	elsif t2 == t3 && t2 < 22 && t3 < 22
-              dosyab = File.read('data/para.json')
-              paralarb = JSON.parse(dosyab)
-              paralarb[idb.to_s] += (bet.to_i)
-              File.write('data/para.json', paralarb.to_json)
-
-              w = event.send "Berabere.Paranız: #{paralarb[idb.to_s]}"
-
-              bjackcur = JSON.parse(File.read('data/bjackcur.json'))
-              players = bjackcur['currentplayers']
-              players.delete(idb.to_s)
-              File.write('data/bjackcur.json', bjackcur.to_json)
-              nil
+              q += "Berabere.Paranız: #{user.money}"
+              m.edit q
+              $players.delete(idb)
             else
-              dosyab = File.read('data/para.json')
-              paralarb = JSON.parse(dosyab)
-              event.send "Kaybettiniz.Paranız: #{paralarb[idb.to_s]}"
-
-              bjackcur = JSON.parse(File.read('data/bjackcur.json'))
-              players = bjackcur['currentplayers']
-              players.delete(idb.to_s)
-              File.write('data/bjackcur.json', bjackcur.to_json)
-              nil
-                end
-
-
+              q += "Kaybettiniz.Paranız: #{user.money}"
+              m.edit q
+              $players.delete(idb)
+            end
+            nil
         end
       end
+    end
 end
 end
 end

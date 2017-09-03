@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
 gem 'discordrb'
-gem 'httparty'
-gem 'colorize'
-gem 'rest-client'
+gem 'pg'
+gem 'activerecord'

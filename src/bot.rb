@@ -2,11 +2,25 @@
 require 'bundler/setup'
 require 'discordrb'
 require 'yaml'
-require 'httparty'
-require 'rest-client'
+require 'pg'
+require 'active_record'
 
+ActiveRecord::Base.establish_connection(
+  'postgres://rlyxiyddgjgprw:7acbd7f955062ae90d55897f68ae03723e6d1f708f16e98455ccff7300d3d7fc@ec2-54-247-175-255.eu-west-1.compute.amazonaws.com:5432/d6f331pq16fvti'
+)
+
+ActiveRecord::Schema.define do
+
+   end
+class User < ActiveRecord::Base
+  default_scope { order("money DESC") }
+end
 # The main bot module.
 module Bot
+
+  # bjack v4
+  $players = {}
+  $ruletplayers = {}
   # Load non-Discordrb modules
   Dir['src/modules/*.rb'].each { |mod| load mod }
 

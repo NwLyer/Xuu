@@ -1,87 +1,88 @@
 module Bot
   module DiscordCommands
- module Give
+    module Give
       extend Discordrb::Commands::CommandContainer
-bucket :moneybucket, limit: nil , time_span: nil , delay: 15
-      command :give, bucket: :moneybucket, rate_limit_message: '%time% saniye daha bekleyiniz.' do |event, *args|
-          kisi = event.message.mentions[0]
-	if "<@#{event.message.mentions[0].id}>" == args[1]
-	event.send "Doğru kullanım (*give @nick para)"
-else
+      $moneybucket = bucket :bj, delay: 15
+      command :give do |event, *args|
+          bucketresponse = $moneybucket.rate_limited?(event.user)
+          if bucketresponse
+            event.send_temporary_message "**------------------------------**\n#{event.user.username} oynamak için #{bucketresponse.round(2)} saniye bekleyiniz.", 10.0
+          else
+        kisi = event.message.mentions[0]
+        if args[1] == "<@#{event.message.mentions[0].id}>"
+          event.send_temporary_message "**------------------------------**\n#{event.user.username} doğru kullanım (*give @nick para)", 20.0
+        else
           if event.message.mentions.size > 1
-              event.send "Tek seferde bir kişiye para atabilirsiniz.(*give @nick para)"
-        elsif event.message.mentions.size == 1
-	 if event.message.mentions[0].id == event.user.id
-		event.send "Kendinize para gönderemezsiniz."
-	else
-        nick = event.user.username
-        id = event.user.id
-        dosya = File.read('data/para.json')
-        paralar = JSON.parse(dosya)
-        if paralar[id.to_s] < args[1].to_i
-         event.send "Yeterli paranız bulunmamaktadır."
-	else
-          paralar[id.to_s] -= args[1].to_i
-		if paralar[kisi.id.to_s].to_i == 0
-		 paralar[kisi.id.to_s] = (100000 + args[1].to_i)
-		else
-		 paralar[kisi.id.to_s] += args[1].to_i
-		end
-          File.write('data/para.json', paralar.to_json)
-        nil
-        event.send "#{kisi.username}'e #{args[1]} gönderildi. Paranız:#{paralar[id.to_s]}"
+            event.send_temporary_message "**------------------------------**\n#{event.user.username} tek seferde bir kişiye para atabilirsiniz.(*give @nick para)", 20.0
+          elsif event.message.mentions.size == 1
+            if event.message.mentions[0].id == event.user.id
+              event.send_temporary_message "**------------------------------**\n#{event.user.username} kendinize para gönderemezsiniz.", 20.0
+            else
+              nick = event.user.username
+              id = event.user.id
+              user = User.find_by(user_id: id)
+              user = User.create(user_id: id) if user.nil?
+              if user.money < args[1].to_i
+                event.send_temporary_message "**------------------------------**\n#{event.user.username} yeterli paranız bulunmamaktadır. Paranız: #{user.money}", 20.0
+              else
+                user.money -= args[1].to_i
+                user.save
+                alan = User.find_by(user_id: kisi.id)
+                alan = User.create(user_id: kisi.id) if alan.nil?
+                alan.money += args[1].to_i
+                alan.save
+                nil
+                event.send "**------------------------------**\n#{event.user.username} #{kisi.username}'e #{args[1]} gönderdi. Parası:#{user.money}"
+      end
+         end
+          elsif event.message.mentions.empty?
+            event.send_temporary_message "**------------------------------**\nLütfen para atmak istediğiniz kişiyi etiketleyin.(*give @nick para)", 20.0
 end
-end
-	elsif event.message.mentions.size == 0
-event.send "Lütfen para atmak istediğiniz kişiyi etiketleyin.(*give @nick para)"
-end
-     end
-    end
-end
+           end
+         end
+           event.message.delete
+      end
+   end
     module Money
       extend Discordrb::Commands::CommandContainer
-bucket :moneybucket, limit: nil , time_span: nil , delay: 15
-      command :money, bucket: :moneybucket, rate_limit_message: '%time% saniye daha bekleyiniz.' do |event|
+      command :money do |event|
+        bucketresponse = $moneybucket.rate_limited?(event.user)
+        if bucketresponse
+          event.send_temporary_message "**------------------------------**\n#{event.user.username} oynamak için #{bucketresponse.round(2)} saniye bekleyiniz.", 10.0
+        else
         nick = event.user.username
         id = event.user.id
-        dosya = File.read('data/para.json')
-        paralar = JSON.parse(dosya)
-        if paralar[id.to_s] == nil
-          paralar[id.to_s] = 100000
-          File.write('data/para.json', paralar.to_json)
-        end
-        event.send "#{nick} paranız:#{paralar[id.to_s]}"
+        user = User.find_by(user_id: id)
+        user = User.create(user_id: id) if user.nil?
+        event.send_temporary_message "**------------------------------**\n#{nick} paranız:#{user.money}", 20.0
         nil
+        end
+          event.message.delete
       end
     end
     module Addmoney
       extend Discordrb::Commands::CommandContainer
       command(:addmoney, help_available: false) do |event, *args|
+        sleep(0.5)
+        event.message.delete
         break unless event.user.id == CONFIG.owner
-        dosya = File.read('data/para.json')
-        paralar = JSON.parse(dosya)
-        paralar[args[0].to_s] += args[1].to_i
-        File.write('data/para.json', paralar.to_json)
+        user = User.find_by(user_id: args[0].to_i)
+        user = User.create(user_id: args[0].to_i) if user.nil?
+        user.money += args[1].to_i
+        user.save
         nil
       end
     end
     module Rmmoney
       extend Discordrb::Commands::CommandContainer
       command(:rmmoney, help_available: false) do |event, *args|
+        sleep(0.5)
+        event.message.delete
         break unless event.user.id == CONFIG.owner
-        dosya = File.read('data/para.json')
-        paralar = JSON.parse(dosya)
-        paralar[args[0].to_s] -= args[1].to_i
-        File.write('data/para.json', paralar.to_json)
-        nil
-      end
-    end
-    module Dbmoney
-      extend Discordrb::Commands::CommandContainer
-      command(:dbmoney, help_available: false) do |event|
-        break unless event.user.id == CONFIG.owner
-        dosya = File.read('data/para.json')
-        event.send "#{dosya}"
+        user = User.find_by(user_id: args[0].to_i)
+        user = User.create(user_id: args[0].to_i) if user.nil?
+        user.money -= args[1].to_i
+        user.save
         nil
       end
     end
