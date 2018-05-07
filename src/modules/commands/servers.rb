@@ -3,7 +3,9 @@ module Bot
     module Servers
       extend Discordrb::Commands::CommandContainer
       command :servers do |event|
-        BOT.servers.each {|a, b| event.send "#{b.name}"}
+text = ""
+        BOT.servers.each {|a, b| text += "#{b.name},"}
+event.send text
         nil
       end
     end

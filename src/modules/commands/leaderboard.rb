@@ -10,12 +10,13 @@ module Bot
         else
           allmembers = event.server.members.map!(&:id)
           leaders = User.where(user_id: allmembers).limit(10)
-          ltext = "**------------------------------**\n**LEADERBOARD**\n"
+          ltext = "**LEADERBOARD**\n"
           ott = 1
           leaders.each do |l|
             ltext += "**#{ott}.** `#{event.server.member(l.user_id).username}` **-** `#{l.money}`\n"
             ott += 1
           end
+          ltext += "**------------------------------**"
           event.send ltext
           nil
    end

@@ -2,7 +2,7 @@ module Bot
   module DiscordCommands
     module Race
       extend Discordrb::Commands::CommandContainer
-      racebucket = bucket :bj, delay: 5
+      racebucket = bucket :racebucket, delay: 5
       command :race do |event, *args|
         bucketresponse = racebucket.rate_limited?(event.user)
          if bucketresponse
@@ -12,7 +12,7 @@ module Bot
         user = User.create(user_id: event.user.id) if user.nil?
         if args[1] == nil
           event.send_temporary_message "**------------------------------**\n#{nickrace} bet miktarını giriniz.(*race at bet)", 20.0
-        elsif 0 <= args[1].to_i && args[1].to_i < 1000
+        elsif args[1].to_i < 1000
           event.send_temporary_message "**------------------------------**\n#{nickrace} en düşük bet miktarı 1000", 20.0
         else
     if args[0].to_i == 1 || args[0].to_i == 2 || args[0].to_i == 3 || args[0].to_i == 4 || args[0].to_i == 5
@@ -36,6 +36,7 @@ module Bot
 	end
           tekrarace = 1
           bet = args[1]
+           user.totalmoney += args[1].to_i
            user.money -= args[1].to_i
            user.save
 

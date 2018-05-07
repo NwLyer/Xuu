@@ -3,19 +3,18 @@ module Bot
   module DiscordCommands
     module Bjack
       extend Discordrb::Commands::CommandContainer
-      $bjbucket = bucket :bj, delay: 5
+      $bjbucket = bucket :bj, delay: 1
       command :bjack do |event, args|
         bucketresponse = $bjbucket.rate_limited?(event.user)
          if bucketresponse
-          event.send_temporary_message "**------------------------------**\n#{event.user.username} oynamak için #{bucketresponse.round(2)} saniye bekleyiniz.", 10.0
+          event.send_temporary_message "#{event.user.username} oynamak için #{bucketresponse.round(2)} saniye bekleyiniz.\n**------------------------------**", 10.0
         else
-
         $players = $players.delete_if {|key, value|  Time.now > value['timeout'] }
 
         if args.nil?
-          event.send_temporary_message "**------------------------------**\n#{event.user.username} bet miktarını giriniz.(*bjack bet)", 10.0
-        elsif args.to_i >= 0 && args.to_i < 1000
-          event.send_temporary_message "**------------------------------**\n#{event.user.username} en düşük bet miktarı 1000", 10.0
+          event.send_temporary_message "#{event.user.username} bet miktarını giriniz.(*bjack bet)\n**------------------------------**", 10.0
+        elsif args.to_i < 1000
+          event.send_temporary_message "#{event.user.username} en düşük bet miktarı 1000\n**------------------------------**", 10.0
         else
           # v3 play2gather v4 update..
           nick = event.user.username
@@ -25,14 +24,14 @@ module Bot
           user = User.create(user_id: idb) if user.nil?
 
           if args.to_i > user.money
-            event.send_temporary_message "**------------------------------**\n#{event.user.username} yeterli paranız bulunmamaktadır. Paranız: #{user.money}", 10.0
+            event.send_temporary_message "#{event.user.username} yeterli paranız bulunmamaktadır. Paranız: #{user.money}\n**------------------------------**", 10.0
           else
-
+            user.totalmoney += args.to_i
             user.money -= args.to_i
             user.save
-            event.send "**------------------------------**"
             fuk = 0
             dfuk = 0
+            gg = false
             k = 0
             timeout = Time.now + 600
             kartlar = %w[1 2 3 4 5 6 7 8 9 X J Q K 1 2 3 4 5 6 7 8 9 X J Q K 1 2 3 4 5 6 7 8 9 X J Q K 1 2 3 4 5 6 7 8 9 X J Q K]
@@ -86,11 +85,15 @@ module Bot
               if fuk > 0
                 t2 -= 10
                 fuk -= 1
+                event.message.delete
               elsif fuk == 0
                 #gg
               end
-              else
-                #21 geçmedi devam aslan
+            elsif t2 == 21
+                gg = true
+                bet = (bet * (5/4))
+            else
+              event.message.delete
               end
 
       m = event.send " ```
@@ -102,29 +105,30 @@ I   I######I     I   I      I
 ----I######I     ----I      I
     --------         --------
  Kart çekmek için *bcard
- Kalmak için *bdone
-```"
+ Kalmak için *bdone```
+**------------------------------**"
             # bjack v3 - v4
             $players[idb.to_s] = Hash['message', m, 'nick', nick, 'idb', idb, 'bet', bet, 'fuk', fuk, 'dfuk', dfuk, 'k', k, 'kartlar', kartlar, 'b', b, 'i', i, 'u', u, 'd', d, 't1', t1, 't2', t2, 't0', t0, 'timeout', timeout]
+            if gg == true
+              $bdone.call(event,[])
+            end
             nil
           end
         end
       end
-        event.message.delete
       end
 end
     module Bcard
       extend Discordrb::Commands::CommandContainer
       command :bcard do |event|
         sleep(0.1)
-          event.message.delete
         bucketresponse = $bjbucket.rate_limited?(event.user)
          if bucketresponse
-          event.send_temporary_message "**------------------------------**\n#{event.user.username} oynamak için #{bucketresponse.round(2)} saniye bekleyiniz.", 10.0
+          event.send_temporary_message "#{event.user.username} oynamak için #{bucketresponse.round(2)} saniye bekleyiniz.\n**------------------------------**", 10.0
         else
 
         if !$players.key?(event.user.id.to_s)
-          event.send_temporary_message "**------------------------------**\n#{event.user.username} aktif oyununuz bulunmamaktadır. Yeni oyun başlatmak için (*bjack bet)", 10.0
+          event.send_temporary_message "#{event.user.username} aktif oyununuz bulunmamaktadır. Yeni oyun başlatmak için (*bjack bet)\n**------------------------------**", 10.0
         else
           # bjackv3
           idb = event.user.id.to_s
@@ -144,7 +148,7 @@ end
           c2 = $players[idb]['c2']
           c3 = $players[idb]['c3']
           m = $players[idb]['message']
-
+          gg = false
           k += 1
           if k == 1
 
@@ -167,11 +171,14 @@ end
               if fuk > 0
                 t2 -= 10
                 fuk -= 1
+                event.message.delete
               elsif fuk == 0
-                #gg
+                gg = true
               end
-              else
-                #21 geçmedi devam aslan
+            elsif t2 == 21
+                gg = true
+            else
+                  event.message.delete
               end
               $players[idb] = $players[idb].merge(Hash['message', m, 'fuk', fuk, 'dfuk', dfuk, 'k', k, 'kartlar', kartlar, 't1', t1, 't2', t2, 't0', t0, 'c1', c1])
               nil
@@ -185,8 +192,8 @@ I   I######I      I   I      I  --------
 ----I######I      ----I      I  I #{c1}    I
     --------          --------  I      I
                                 I      I
-                                --------
- ```"
+                                --------```
+**------------------------------**"
 
 
             sleep(0.6)
@@ -199,8 +206,8 @@ I   I######I      I   I      --------
 ----I######I      ----I      I #{c1}    I
     --------          -------I      I
                              I      I
-                             --------
-```"
+                             --------```
+**------------------------------**"
             sleep(0.6)
 
 
@@ -212,8 +219,11 @@ I   I######I      I   I #{d} --------
 I   I######I      I   I   I #{c1}    I
 ----I######I      ----I   I      I
     --------          ----I      I
-                          --------
-```"
+                          --------```
+**------------------------------**"
+if gg == true
+  $bdone.call(event,[])
+end
   elsif k == 2
 
             c2 = kartlar.sample
@@ -234,11 +244,14 @@ I   I######I      I   I   I #{c1}    I
               if fuk > 0
                 t2 -= 10
                 fuk -= 1
+                event.message.delete
               elsif fuk == 0
-                #gg
+                gg = true
               end
-              else
-                #21 geçmedi devam aslan
+            elsif t2 == 21
+                gg = true
+            else
+                  event.message.delete
               end
               $players[idb] = $players[idb].merge(Hash['message', m, 'fuk', fuk, 'dfuk', dfuk, 'k', k, 'kartlar', kartlar, 't1', t1, 't2', t2, 't0', t0, 'c2', c2])
               nil
@@ -253,8 +266,8 @@ I   I######I      I   I   I #{c1}    I
     --------          ----I      I  I #{c2}    I
                           --------  I      I
                                     I      I
-                                    --------
-```"
+                                    --------```
+**------------------------------**"
             sleep(0.5)
 m.edit " ```
 Dealer(#{t0})    #{nick[0..10]}(#{t2})
@@ -266,8 +279,8 @@ I   I######I      I   I   I #{c1}    I
     --------          ----I      I #{c2}    I
                           -------I      I
                                  I      I
-                                 --------
-```"
+                                 --------```
+**------------------------------**"
             sleep(0.5)
 
 m.edit " ```
@@ -279,8 +292,11 @@ I   I######I      I   I   I #{c1} --------
 ----I######I      ----I   I   I #{c2}    I
     --------          ----I   I      I
                           ----I      I
-                              --------
-```"
+                              --------```
+**------------------------------**"
+if gg == true
+  $bdone.call(event,[])
+end
           elsif k == 3
 
             c3 = kartlar.sample
@@ -300,11 +316,14 @@ I   I######I      I   I   I #{c1} --------
               if fuk > 0
                 t2 -= 10
                 fuk -= 1
+                event.message.delete
               elsif fuk == 0
-                #gg
+                gg = true
               end
-              else
-                #21 geçmedi devam aslan
+            elsif t2 == 21
+                gg = true
+            else
+                  event.message.delete
               end
               $players[idb] = $players[idb].merge(Hash['fuk', fuk, 'dfuk', dfuk, 'k', k, 'kartlar', kartlar, 't1', t1, 't2', t2, 't0', t0, 'c3', c3])
               nil
@@ -320,8 +339,8 @@ I   I######I      I   I   I #{c1} --------
                           ----I      I  I #{c3}    I
                               --------  I      I
                                         I      I
-                                        --------
-```"
+                                        --------```
+**------------------------------**"
 
             sleep(0.5)
 m.edit " ```
@@ -335,8 +354,8 @@ I   I######I      I   I   I #{c1} --------
                           ----I      I #{c3}    I
                               -------I      I
                                      I      I
-                                     --------
-```"
+                                     --------```
+**------------------------------**"
             sleep(0.5)
 
 
@@ -351,10 +370,15 @@ I   I######I      I   I   I #{c1} --------
     --------          ----I   I   I #{c3}    I
                           ----I   I      I
                               ----I      I
-                                  --------
-```"
+                                  --------```
+**------------------------------**"
+if gg == true
+  $bdone.call(event,[])
+end
           else
-            event.send_temporary_message "**------------------------------**\n#{nick} başka kart çekemezsiniz.", 20.0
+            sleep(2)
+            event.send_temporary_message "#{nick} başka kart çekemezsiniz.\n**------------------------------**", 20.0
+            $bdone.call(event,[])
          end
        end
         end
@@ -362,16 +386,16 @@ I   I######I      I   I   I #{c1} --------
     end
     module Bdone
       extend Discordrb::Commands::CommandContainer
-      command :bdone do |event|
+    $bdone = command :bdone do |event|
         sleep(0.1)
           event.message.delete
         bucketresponse = $bjbucket.rate_limited?(event.user)
          if bucketresponse
-          event.send_temporary_message "**------------------------------**\n#{event.user.username} oynamak için #{bucketresponse.round(2)} saniye bekleyiniz.", 10.0
+          event.send_temporary_message "#{event.user.username} oynamak için #{bucketresponse.round(2)} saniye bekleyiniz.\n**------------------------------**", 10.0
         else
 
         if !$players.key?(event.user.id.to_s)
-          event.send_temporary_message "**------------------------------**\n#{event.user.username} aktif oyununuz bulunmamaktadır. Yeni oyun başlatmak için (*bjack bet)", 10.0
+          event.send_temporary_message "#{event.user.username} aktif oyununuz bulunmamaktadır. Yeni oyun başlatmak için (*bjack bet)\n**------------------------------**", 10.0
         else
           # bjackv3
           idb = event.user.id.to_s
@@ -545,18 +569,18 @@ end
               user.money += (bet.to_i * 2)
               user.save
 
-              q += "Tebrikler kazandınız.Paranız: #{user.money}"
+              q += "Tebrikler kazandınız.Paranız: #{user.money}\n**------------------------------**"
               m.edit q
               $players.delete(idb)
 	          elsif t2 == t3 && t2 < 22 && t3 < 22
               user.money += (bet.to_i)
               user.save
 
-              q += "Berabere.Paranız: #{user.money}"
+              q += "Berabere.Paranız: #{user.money}\n**------------------------------**"
               m.edit q
               $players.delete(idb)
             else
-              q += "Kaybettiniz.Paranız: #{user.money}"
+              q += "Kaybettiniz.Paranız: #{user.money}\n**------------------------------**"
               m.edit q
               $players.delete(idb)
             end
